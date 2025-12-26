@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Label Reeha - Catalogue</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Lato:wght@300;400&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Anonymous+Pro:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Inter:wght@300;400;500&display=swap"
+        rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-dark': '#1a1a1a',
+                        'brand-gold': '#d4af37',
+                        'brand-cream': '#f5f0eb',
+                        'brand-gray': '#8c8c8c',
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Lato"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /*
+        ========================================
+        1. GLOBAL AND RESET STYLES
+        ========================================
+        */
+        :root {
+            --bg-color: #050505;
+            --text-color: #e0e0e0;
+            --accent-color: #ffffff;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            color: #1a1a1a;
+            cursor: none;
+            background-color: #f9f7f2;
+            overflow-x: hidden;
+        }
+
+        /* Custom Cursor */
+        .cursor-dot,
+        .cursor-outline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #1a1a1a;
+        }
+
+        .cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(26, 26, 26, 0.5);
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+        }
+
+        body.hovering .cursor-outline {
+            width: 60px;
+            height: 60px;
+            background-color: rgba(212, 175, 55, 0.1);
+            border-color: #d4af37;
+        }
+
+        /*
+        ========================================
+        2. NAVIGATION BAR STYLES
+        ========================================
+        */
+        .header {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            box-sizing: border-box;
+            background-color: rgba(255, 255, 255, 0.95);
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* LOGO STYLES */
+        .logo a {
+            display: block;
+            text-decoration: none;
+        }
+
+        .logo-img {
+            height: 55px;
+            /* Desktop Height */
+            width: auto;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+
+
+        .logo-img:hover {
+            transform: scale(1.1);
+        }
+
+        .logo-border {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 55px;
+            height: 55px;
+            padding: 2px;
+            /* Border thickness */
+            border-radius: 50%;
+            background: linear-gradient(135deg, #b8860b, #d4af37, #f3e5ab, #d4af37, #b8860b);
+            box-shadow: 0 2px 10px rgba(212, 175, 55, 0.2);
+            flex-shrink: 0;
+        }
+
+        .logo-border img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            display: block;
+        }
+
+        .brand-name {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-left: 12px;
+            background: linear-gradient(135deg, #b8860b, #d4af37, #f3e5ab, #d4af37, #b8860b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+
+        .logo a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #5d4a36;
+            text-decoration: none;
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 0.9em;
+            letter-spacing: 1.5px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #af9b89;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 18px;
+            white-space: nowrap;
+        }
+
+        .social-links a {
+            color: #5d4a36;
+            font-size: 1.1em;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #af9b89;
+        }
+
+        /* Product Tabs */
+        .category-tab.active {
+            background-color: #1a1a1a;
+            color: white;
+            border-color: #1a1a1a;
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            z-index: 2000;
+        }
+
+        .bar {
+            display: block;
+            width: 25px;
+            height: 2px;
+            margin: 5px auto;
+            transition: all 0.3s ease-in-out;
+            background-color: #5d4a36;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            left: -100%;
+            top: 0;
+            gap: 0;
+            flex-direction: column;
+            background-color: #f9f7f2;
+            width: 100%;
+            height: 100vh;
+            text-align: center;
+            transition: 0.3s;
+            z-index: 1500;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .mobile-menu.active {
+            left: 0;
+        }
+
+        .mobile-menu li {
+            margin: 20px 0;
+        }
+
+        .mobile-menu a {
+            font-size: 1.5rem;
+        }
+
+        .hamburger.active .bar:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active .bar:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+
+        .hamburger.active .bar:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+        /* Media Query */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu {
+                display: flex;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .header {
+                padding: 15px 20px;
+            }
+
+            .social-links {
+                display: none;
+            }
+
+            .mobile-menu .social-links {
+                display: flex;
+                margin-top: 20px;
+                gap: 20px;
+            }
+
+            .mobile-menu .social-links a {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Reveal Effect for Images */
+        .reveal-img-container {
+            overflow: hidden;
+            position: relative;
+        }
+
+        .reveal-img-container img:first-of-type {
+            transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .reveal-img-container:hover img:first-of-type {
+            transform: scale(1.1);
+        }
+
+        /* --- Social Icon Colors --- */
+        .icon-insta {
+            color: #E1306C;
+        }
+
+        .icon-fb {
+            color: #1877F2;
+        }
+
+        .icon-wa {
+            color: #25D366;
+        }
+
+        /* Modal Styles */
+        #product-modal {
+            backdrop-filter: blur(8px);
+            z-index: 10000;
+            /* Extremely high Z-index to cover navbar */
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <header class="header">
+        <div class="logo">
+            <a href="index.html">
+                <div class="logo-border">
+                    <img src="Assets/logo.jpeg" alt="Label Reeha" class="logo-img">
+                </div>
+                <span class="brand-name">Label Reeha</span>
+            </a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="About.html">About</a></li>
+            <li><a href="Shop.html">Shop</a></li>
+            <li><a href="Contacts.html">Contact</a></li>
+        </ul>
+
+        <ul class="nav-links mobile-menu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="About.html">About</a></li>
+            <li><a href="Shop.html">Shop</a></li>
+            <li><a href="Contacts.html">Contact</a></li>
+            <li>
+                <div class="social-links">
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </li>
+        </ul>
+
+        <div class="hamburger">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+        <div class="social-links">
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        </div>
+    </header>
+
+    <section class="pt-24 pb-12 px-6 md:px-12">
+        <div class="max-w-7xl mx-auto">
+            <h1 class="font-display text-6xl md:text-8xl font-extrabold text-center mb-4 reveal-up">
+                THE CATALOGUE
+            </h1>
+            <p class="text-center text-lg text-gray-500 max-w-4xl mx-auto mb-12 reveal-up">
+                Every piece from Label Reeha shares a story of artisans, women, rituals, and modern style rooted in
+                timeless tradition.
+                It celebrates the hidden tales in fabrics, the patterns we cherish, and the deep connection between a
+                woman and her heritage.
+                In an age of mass production and fast fashion, Label Reeha offers emotional, cultural, and artisanal
+                value - a reminder that what we wear should mean something.
+            </p>
+
+            <div
+                class="flex flex-col md:flex-row justify-between items-center gap-6 mb-12 border-b border-gray-300 pb-6 reveal-up">
+
+                <div class="w-full md:w-1/3">
+                    <div class="relative">
+                        <input type="text" placeholder="Search product name or material..."
+                            class="w-full bg-white border border-gray-300 px-5 py-3 text-sm focus:outline-none focus:border-brand-gold transition-colors"
+                            id="product-search">
+                        <i data-lucide="search"
+                            class="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap justify-center md:justify-end gap-3 w-full md:w-2/3" id="category-tabs"
+                    style="display: none;">
+                    <!-- Categories removed -->
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8" id="product-grid">
+
+
+
+                <div class="product-item" data-category="rings" data-name="LR-8">
+                    <div class="reveal-img-container aspect-[3/4] mb-4 cursor-pointer product-image-trigger">
+                        <img src="Assets/LR-8.jpg" alt="LR-8" class="w-full h-full object-cover"><img
+                            src="Assets/logo.jpeg"
+                            class="absolute top-2 right-2 w-8 h-8 rounded-full border border-white/50 z-10" alt="Logo">
+                    </div>
+                    <h3 class="font-serif text-xl mb-1">LR-8</h3>
+
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs text-gray-500 uppercase tracking-widest">Inquire now</span>
+                        <div class="flex space-x-3">
+                            <a href="#" class="icon-insta hover:scale-110 transition-transform hover-trigger"
+                                title="Instagram"><i class="fab fa-instagram text-2xl"></i></a>
+                            <a href="#" class="icon-fb hover:scale-110 transition-transform hover-trigger"
+                                title="Facebook"><i class="fab fa-facebook text-2xl"></i></a>
+                            <a href="#" class="icon-wa hover:scale-110 transition-transform hover-trigger"
+                                title="WhatsApp"><i class="fab fa-whatsapp text-2xl"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-item" data-category="necklaces" data-name="LR-7">
+                    <div class="reveal-img-container aspect-[3/4] mb-4 cursor-pointer product-image-trigger">
+                        <img src="Assets/LR-7.jpg" alt="LR-7" class="w-full h-full object-cover"><img
+                            src="Assets/logo.jpeg"
+                            class="absolute top-2 right-2 w-8 h-8 rounded-full border border-white/50 z-10" alt="Logo">
+                    </div>
+                    <h3 class="font-serif text-xl mb-1">LR-7</h3>
+
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs text-gray-500 uppercase tracking-widest">Inquire now</span>
+                        <div class="flex space-x-3">
+                            <a href="#" class="icon-insta hover:scale-110 transition-transform hover-trigger"
+                                title="Instagram"><i class="fab fa-instagram text-2xl"></i></a>
+                            <a href="#" class="icon-fb hover:scale-110 transition-transform hover-trigger"
+                                title="Facebook"><i class="fab fa-facebook text-2xl"></i></a>
+                            <a href="#" class="icon-wa hover:scale-110 transition-transform hover-trigger"
+                                title="WhatsApp"><i class="fab fa-whatsapp text-2xl"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-item" data-category="earrings" data-name="LR-6">
+                    <div class="reveal-img-container aspect-[3/4] mb-4 cursor-pointer product-image-trigger">
+                        <img src="Assets/LR-6.jpg" alt="LR-6" class="w-full h-full object-cover"><img
+                            src="Assets/logo.jpeg"
+                            class="absolute top-2 right-2 w-8 h-8 rounded-full border border-white/50 z-10" alt="Logo">
+                    </div>
+                    <h3 class="font-serif text-xl mb-1">LR-6</h3>
+
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs text-gray-500 uppercase tracking-widest">Inquire now</span>
+                        <div class="flex space-x-3">
+                            <a href="#" class="icon-insta hover:scale-110 transition-transform hover-trigger"
+                                title="Instagram"><i class="fab fa-instagram text-2xl"></i></a>
+                            <a href="#" class="icon-fb hover:scale-110 transition-transform hover-trigger"
+                                title="Facebook"><i class="fab fa-facebook text-2xl"></i></a>
+                            <a href="#" class="icon-wa hover:scale-110 transition-transform hover-trigger"
+                                title="WhatsApp"><i class="fab fa-whatsapp text-2xl"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-item" data-category="bracelets" data-name="LR-5">
+                    <div class="reveal-img-container aspect-[3/4] mb-4 cursor-pointer product-image-trigger">
+                        <img src="Assets/LR-5.jpg" alt="LR-5" class="w-full h-full object-cover"><img
+                            src="Assets/logo.jpeg"
+                            class="absolute top-2 right-2 w-8 h-8 rounded-full border border-white/50 z-10" alt="Logo">
+                    </div>
+                    <h3 class="font-serif text-xl mb-1">LR-5</h3>
+
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs text-gray-500 uppercase tracking-widest">Inquire now</span>
+                        <div class="flex space-x-3">
+                            <a href="#" class="icon-insta hover:scale-110 transition-transform hover-trigger"
+                                title="Instagram"><i class="fab fa-instagram text-2xl"></i></a>
+                            <a href="#" class="icon-fb hover:scale-110 transition-transform hover-trigger"
+                                title="Facebook"><i class="fab fa-facebook text-2xl"></i></a>
+                            <a href="#" class="icon-wa hover:scale-110 transition-transform hover-trigger"
+                                title="WhatsApp"><i class="fab fa-whatsapp text-2xl"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-item" data-category="rings" data-name="LR-4">
+                    <div class="reveal-img-container aspect-[3/4] mb-4 cursor-pointer product-image-trigger">
+                        <img src="Assets/LR-4.jpg" alt="LR-4" class="w-full h-full object-cover"><img
+                            src="Assets/logo.jpeg"
+                            class="absolute top-2 right-2 w-8 h-8 rounded-full border border-white/50 z-10" alt="Logo">
+                    </div>
+                    <h3 class="font-serif text-xl mb-1">LR-4</h3>
+
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs text-gray-500 uppercase tracking-widest">Inquire now</span>
+                        <div class="flex space-x-3">
+                            <a href="#" class="icon-insta hover:scale-110 transition-transform hover-trigger"
+                                title="Instagram"><i class="fab fa-instagram text-2xl"></i></a>
+                            <a href="#" class="icon-fb hover:scale-110 transition-transform hover-trigger"
+                                title="Facebook"><i class="fab fa-facebook text-2xl"></i></a>
+                            <a href="#" class="icon-wa hover:scale-110 transition-transform hover-trigger"
+                                title="WhatsApp"><i class="fab fa-whatsapp text-2xl"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-item" data-category="necklaces" data-name="LR-3">
+                    <div class="reveal-img-container aspect-[3/4] mb-4 cursor-pointer product-image-trigger">
+                        <img src="Assets/LR-3.jpg" alt="LR-3" class="w-full h-full object-cover"><img
+                            src="Assets/logo.jpeg"
+                            class="absolute top-2 right-2 w-8 h-8 rounded-full border border-white/50 z-10" alt="Logo">
+                    </div>
+                    <h3 class="font-serif text-xl mb-1">LR-3</h3>
+
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs text-gray-500 uppercase tracking-widest">Inquire now</span>
+                        <div class="flex space-x-3">
+                            <a href="#" class="icon-insta hover:scale-110 transition-transform hover-trigger"
+                                title="Instagram"><i class="fab fa-instagram text-2xl"></i></a>
+                            <a href="#" class="icon-fb hover:scale-110 transition-transform hover-trigger"
+                                title="Facebook"><i class="fab fa-facebook text-2xl"></i></a>
+                            <a href="#" class="icon-wa hover:scale-110 transition-transform hover-trigger"
+                                title="WhatsApp"><i class="fab fa-whatsapp text-2xl"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-item" data-category="earrings" data-name="LR-2">
+                    <div class="reveal-img-container aspect-[3/4] mb-4 cursor-pointer product-image-trigger">
+                        <img src="Assets/LR-2.jpg" alt="LR-2" class="w-full h-full object-cover"><img
+                            src="Assets/logo.jpeg"
+                            class="absolute top-2 right-2 w-8 h-8 rounded-full border border-white/50 z-10" alt="Logo">
+                    </div>
+                    <h3 class="font-serif text-xl mb-1">LR-2</h3>
+
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs text-gray-500 uppercase tracking-widest">Inquire now</span>
+                        <div class="flex space-x-3">
+                            <a href="#" class="icon-insta hover:scale-110 transition-transform hover-trigger"
+                                title="Instagram"><i class="fab fa-instagram text-2xl"></i></a>
+                            <a href="#" class="icon-fb hover:scale-110 transition-transform hover-trigger"
+                                title="Facebook"><i class="fab fa-facebook text-2xl"></i></a>
+                            <a href="#" class="icon-wa hover:scale-110 transition-transform hover-trigger"
+                                title="WhatsApp"><i class="fab fa-whatsapp text-2xl"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-item" data-category="bracelets" data-name="LR-1">
+                    <div class="reveal-img-container aspect-[3/4] mb-4 cursor-pointer product-image-trigger">
+                        <img src="Assets/LR-1.jpg" alt="LR-1"
+                            class="w-full h-full object-cover object-[45%_center]"><img src="Assets/logo.jpeg"
+                            class="absolute top-2 right-2 w-8 h-8 rounded-full border border-white/50 z-10" alt="Logo">
+                    </div>
+                    <h3 class="font-serif text-xl mb-1">LR-1</h3>
+
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs text-gray-500 uppercase tracking-widest">Inquire now</span>
+                        <div class="flex space-x-3">
+                            <a href="#" class="icon-insta hover:scale-110 transition-transform hover-trigger"
+                                title="Instagram"><i class="fab fa-instagram text-2xl"></i></a>
+                            <a href="#" class="icon-fb hover:scale-110 transition-transform hover-trigger"
+                                title="Facebook"><i class="fab fa-facebook text-2xl"></i></a>
+                            <a href="#" class="icon-wa hover:scale-110 transition-transform hover-trigger"
+                                title="WhatsApp"><i class="fab fa-whatsapp text-2xl"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div id="pagination-controls" class="flex justify-center items-center gap-2 mt-16 flex-wrap">
+            </div>
+
+            <div id="no-results" class="text-center py-24 hidden">
+                <h3 class="font-display text-3xl text-gray-400">No items found matching your filter/search.</h3>
+                <p class="text-gray-500 mt-2">Try clearing the search or choosing another category.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <footer class="bg-[#111] text-white pt-24 pb-12 px-6 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+            <div class="col-span-1 md:col-span-1">
+                <a href="#" class="flex items-center mb-6">
+                    <div class="logo-border">
+                        <img src="Assets/logo.jpeg" alt="Label Reeha"
+                            class="h-16 w-auto opacity-90 hover:opacity-100 transition-opacity">
+                    </div>
+                    <span class="brand-name text-lg">Label Reeha</span>
+                </a>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                    To share the spirit of Assam with the world “One handcrafted piece at a time"
+                </p>
+            </div>
+
+            <div>
+                <h4 class="font-serif text-lg mb-6 text-[#D4AF37]">Shop</h4>
+                <ul class="space-y-4 text-gray-400 text-sm">
+                    <li><a href="Shop.html" class="hover:text-white transition-colors hover-trigger">New Arrivals</a>
+                    </li>
+                    <li><a href="Shop.html" class="hover:text-white transition-colors hover-trigger">Best Sellers</a>
+                    </li>
+                    <li><a href="Shop.html" class="hover:text-white transition-colors hover-trigger">Most Popular</a>
+                    </li>
+                    <li><a href="Shop.html" class="hover:text-white transition-colors hover-trigger">Featured</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-serif text-lg mb-6 text-[#D4AF37]">Company</h4>
+                <ul class="space-y-4 text-gray-400 text-sm">
+                    <li><a href="About.html" class="hover:text-white transition-colors hover-trigger">Our Story</a></li>
+                    <li><a href="Shop.html" class="hover:text-white transition-colors hover-trigger">Shop</a></li>
+                    <li><a href="index.html" class="hover:text-white transition-colors hover-trigger">Home</a></li>
+                    <li><a href="Contacts.html" class="hover:text-white transition-colors hover-trigger">Contact</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-serif text-lg mb-6 text-[#D4AF37]">Connect</h4>
+                <div class="flex space-x-6 mb-6 text-xl">
+                    <a href="#" class="hover:text-[#D4AF37] transition-colors hover-trigger"><i
+                            class="fab fa-instagram"></i></a>
+                    <a href="#" class="hover:text-[#D4AF37] transition-colors hover-trigger"><i
+                            class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="hover:text-[#D4AF37] transition-colors hover-trigger"><i
+                            class="fab fa-whatsapp"></i></a>
+                </div>
+                <p class="text-gray-500 text-xs">© 2026 Label Reeha Jewelry. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="product-modal" class="fixed inset-0 z-50 hidden flex justify-center items-center bg-black/80">
+        <div
+            class="relative w-full h-full md:w-auto md:h-auto max-w-5xl max-h-screen p-4 flex flex-col justify-center items-center">
+
+            <button id="close-modal"
+                class="absolute top-6 right-6 md:top-4 md:right-4 text-white hover:text-brand-gold z-50">
+                <i data-lucide="x" class="w-10 h-10"></i>
+            </button>
+
+            <img id="modal-image" src="" alt="Zoomed Product"
+                class="max-w-full max-h-[80vh] object-contain shadow-2xl rounded-sm">
+
+            <div class="flex space-x-6 mt-6 bg-white/10 backdrop-blur-md px-6 py-3 rounded-full border border-white/20">
+                <a href="#" class="icon-insta hover:scale-125 transition-transform hover-trigger" title="Instagram"><i
+                        class="fab fa-instagram text-3xl"></i></a>
+                <a href="#" class="icon-fb hover:scale-125 transition-transform hover-trigger" title="Facebook"><i
+                        class="fab fa-facebook text-3xl"></i></a>
+                <a href="#" class="icon-wa hover:scale-125 transition-transform hover-trigger" title="WhatsApp"><i
+                        class="fab fa-whatsapp text-3xl"></i></a>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+        gsap.registerPlugin(ScrollTrigger);
+
+        // --- Custom Cursor Logic ---
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorOutline = document.querySelector('.cursor-outline');
+        const hoverTriggers = document.querySelectorAll('.hover-trigger');
+
+        window.addEventListener('mousemove', (e) => {
+            if (window.matchMedia("(hover: none)").matches) return;
+            const posX = e.clientX;
+            const posY = e.clientY;
+
+            cursorDot.style.left = `${posX}px`;
+            cursorDot.style.top = `${posY}px`;
+
+            cursorOutline.animate({
+                left: `${posX}px`,
+                top: `${posY}px`
+            }, { duration: 500, fill: "forwards" });
+        });
+
+        // Re-apply hover trigger logic logic (will call this after pagination renders too)
+        function attachCursorEvents() {
+            document.querySelectorAll('.hover-trigger').forEach(trigger => {
+                trigger.addEventListener('mouseenter', () => {
+                    cursorOutline.style.width = '60px';
+                    cursorOutline.style.height = '60px';
+                    cursorOutline.style.backgroundColor = 'rgba(212, 175, 55, 0.1)';
+                    cursorOutline.style.borderColor = 'transparent';
+                });
+                trigger.addEventListener('mouseleave', () => {
+                    cursorOutline.style.width = '40px';
+                    cursorOutline.style.height = '40px';
+                    cursorOutline.style.backgroundColor = 'transparent';
+                    cursorOutline.style.borderColor = 'rgba(26, 26, 26, 0.5)';
+                });
+            });
+        }
+        attachCursorEvents();
+
+        // --- GSAP Scroll Animations ---
+        gsap.utils.toArray('.reveal-up').forEach(elem => {
+            gsap.from(elem, {
+                scrollTrigger: {
+                    trigger: elem,
+                    start: "top 90%"
+                },
+                y: 40,
+                opacity: 0,
+                duration: 1.2,
+                ease: "power2.out"
+            });
+        });
+
+        // --- PAGINATION, FILTERING & SEARCH LOGIC ---
+        const categoryTabs = document.querySelectorAll('.category-tab');
+        const searchInput = document.getElementById('product-search');
+        const products = document.querySelectorAll('.product-item');
+        const noResultsMessage = document.getElementById('no-results');
+        const paginationContainer = document.getElementById('pagination-controls');
+
+        // Settings
+        const itemsPerPage = 8;
+        let currentPage = 1;
+        let activeCategory = 'all';
+        let searchTerm = '';
+        let matchedProducts = [];
+
+        function updateProducts(resetPage = false) {
+            if (resetPage) currentPage = 1;
+
+            const currentSearchTerm = searchTerm.toLowerCase();
+            matchedProducts = [];
+
+            products.forEach(product => {
+                const productCategory = product.getAttribute('data-category');
+                const productName = product.getAttribute('data-name').toLowerCase();
+
+                const categoryMatch = (activeCategory === 'all' || productCategory === activeCategory);
+                const searchMatch = productName.includes(currentSearchTerm);
+
+                if (categoryMatch && searchMatch) {
+                    matchedProducts.push(product);
+                }
+                product.style.display = 'none';
+            });
+
+            if (matchedProducts.length === 0) {
+                noResultsMessage.classList.remove('hidden');
+                paginationContainer.innerHTML = '';
+                return;
+            } else {
+                noResultsMessage.classList.add('hidden');
+            }
+
+            const totalPages = Math.ceil(matchedProducts.length / itemsPerPage);
+            if (currentPage > totalPages) currentPage = totalPages;
+            if (currentPage < 1) currentPage = 1;
+
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+
+            const itemsToShow = matchedProducts.slice(startIndex, endIndex);
+            itemsToShow.forEach(product => {
+                product.style.display = 'block';
+                gsap.fromTo(product, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5 });
+            });
+
+            renderPaginationControls(totalPages);
+            attachCursorEvents(); // Re-attach cursor hover effects
+        }
+
+        function renderPaginationControls(totalPages) {
+            paginationContainer.innerHTML = '';
+            if (totalPages <= 1) return;
+
+            for (let i = 1; i <= totalPages; i++) {
+                const btn = document.createElement('button');
+                btn.textContent = i;
+                let classes = "w-10 h-10 flex items-center justify-center text-sm font-serif border transition-all duration-300 rounded-full cursor-pointer hover-trigger ";
+                if (i === currentPage) {
+                    classes += "bg-brand-dark text-white border-brand-dark shadow-md";
+                } else {
+                    classes += "bg-white text-gray-500 border-gray-300 hover:border-brand-gold hover:text-brand-gold";
+                }
+                btn.className = classes;
+                btn.addEventListener('click', () => {
+                    currentPage = i;
+                    updateProducts(false);
+                    document.getElementById('product-grid').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
+                paginationContainer.appendChild(btn);
+            }
+        }
+
+        categoryTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                categoryTabs.forEach(t => t.classList.remove('active', 'bg-brand-dark', 'text-white', 'border-brand-dark'));
+                categoryTabs.forEach(t => t.classList.add('bg-white', 'text-brand-dark', 'border-gray-300'));
+                tab.classList.remove('bg-white', 'text-brand-dark', 'border-gray-300');
+                tab.classList.add('active', 'bg-brand-dark', 'text-white', 'border-brand-dark');
+                activeCategory = tab.getAttribute('data-category');
+                updateProducts(true);
+            });
+        });
+
+        searchInput.addEventListener('input', (e) => {
+            searchTerm = e.target.value.trim();
+            updateProducts(true);
+        });
+
+        updateProducts(true);
+
+        // --- IMAGE POPUP MODAL LOGIC ---
+        const modal = document.getElementById('product-modal');
+        const modalImg = document.getElementById('modal-image');
+        const closeModal = document.getElementById('close-modal');
+
+        // Event Delegation for dynamically shown items
+        document.getElementById('product-grid').addEventListener('click', function (e) {
+            // Check if the click happened inside an image container
+            const trigger = e.target.closest('.product-image-trigger');
+            if (trigger) {
+                const img = trigger.querySelector('img');
+                if (img) {
+                    modalImg.src = img.src; // Set modal image source
+                    modal.classList.remove('hidden'); // Show modal
+
+                    // Hide Header
+                    document.querySelector('.header').style.transform = 'translateY(-100%)';
+
+                    gsap.fromTo(modalImg, { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4, ease: "back.out(1.7)" });
+                }
+            }
+        });
+
+        // Close Modal Functions
+        function hideModal() {
+            modal.classList.add('hidden');
+            // Show Header
+            document.querySelector('.header').style.transform = 'translateY(0)';
+        }
+
+        closeModal.addEventListener('click', hideModal);
+
+        // Close on Background Click
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal || e.target.closest('.w-full') === modal) {
+                hideModal();
+            }
+        });
+
+        // --- Mobile Menu ---
+        const hamburger = document.querySelector(".hamburger");
+        const mobileMenu = document.querySelector(".mobile-menu");
+
+        if (hamburger) {
+            hamburger.addEventListener("click", () => {
+                hamburger.classList.toggle("active");
+                mobileMenu.classList.toggle("active");
+            });
+        }
+
+        document.querySelectorAll(".mobile-menu a").forEach(n => n.addEventListener("click", () => {
+            hamburger.classList.remove("active");
+            mobileMenu.classList.remove("active");
+        }));
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Label Reeha - Inquiries</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Lato:wght@300;400&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Anonymous+Pro:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Inter:wght@300;400;500&display=swap"
+        rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-dark': '#1a1a1a',
+                        'brand-gold': '#d4af37',
+                        'brand-cream': '#f5f0eb',
+                        'brand-gray': '#8c8c8c',
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Lato"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /*
+        ========================================
+        1. GLOBAL AND RESET STYLES
+        ========================================
+        */
+        :root {
+            --bg-color: #050505;
+            --text-color: #e0e0e0;
+            --accent-color: #ffffff;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            color: #1a1a1a;
+            cursor: none;
+            background-color: #f9f7f2;
+            overflow-x: hidden;
+        }
+
+        /* Custom Cursor */
+        .cursor-dot,
+        .cursor-outline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #1a1a1a;
+        }
+
+        .cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(26, 26, 26, 0.5);
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+        }
+
+        body.hovering .cursor-outline {
+            width: 60px;
+            height: 60px;
+            background-color: rgba(212, 175, 55, 0.1);
+            border-color: #d4af37;
+        }
+
+        /*
+        ========================================
+        2. NAVIGATION BAR STYLES
+        ========================================
+        */
+        .header {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            box-sizing: border-box;
+            background-color: rgba(255, 255, 255, 0.95);
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* LOGO STYLES */
+        .logo a {
+            display: block;
+            text-decoration: none;
+        }
+
+        .logo-img {
+            height: 55px;
+            /* Desktop Height */
+            width: auto;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+
+
+        .logo-img:hover {
+            transform: scale(1.1);
+        }
+
+        .logo-border {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 55px;
+            height: 55px;
+            padding: 2px;
+            /* Border thickness */
+            border-radius: 50%;
+            background: linear-gradient(135deg, #b8860b, #d4af37, #f3e5ab, #d4af37, #b8860b);
+            box-shadow: 0 2px 10px rgba(212, 175, 55, 0.2);
+            flex-shrink: 0;
+        }
+
+        .logo-border img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            display: block;
+        }
+
+        .brand-name {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-left: 12px;
+            background: linear-gradient(135deg, #b8860b, #d4af37, #f3e5ab, #d4af37, #b8860b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+
+        .logo a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #5d4a36;
+            text-decoration: none;
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 0.9em;
+            letter-spacing: 1.5px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #af9b89;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 18px;
+            white-space: nowrap;
+        }
+
+        .social-links a {
+            color: #5d4a36;
+            font-size: 1.1em;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #af9b89;
+        }
+
+        /* Direct DM Buttons */
+        .dm-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 20px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 5px;
+            transition: background-color 0.3s, transform 0.3s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .dm-button i {
+            margin-right: 8px;
+        }
+
+        .dm-whatsapp {
+            background-color: #25d366;
+            color: white;
+        }
+
+        .dm-instagram {
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            color: white;
+        }
+
+        .dm-facebook {
+            background-color: #1877f2;
+            color: white;
+        }
+
+        .dm-whatsapp:hover,
+        .dm-instagram:hover,
+        .dm-facebook:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        /* Hamburger Menu Icon */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            z-index: 2000;
+        }
+
+        .bar {
+            display: block;
+            width: 25px;
+            height: 2px;
+            margin: 5px auto;
+            -webkit-transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out;
+            background-color: #5d4a36;
+        }
+
+        /* Mobile Menu Overlay */
+        .mobile-menu {
+            position: fixed;
+            left: -100%;
+            top: 0;
+            gap: 0;
+            flex-direction: column;
+            background-color: #f9f7f2;
+            width: 100%;
+            height: 100vh;
+            text-align: center;
+            transition: 0.3s;
+            z-index: 1500;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .mobile-menu.active {
+            left: 0;
+        }
+
+        .mobile-menu li {
+            margin: 20px 0;
+        }
+
+        .mobile-menu a {
+            font-size: 1.5rem;
+        }
+
+        /* Hamburger Animation */
+        .hamburger.active .bar:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active .bar:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+
+        .hamburger.active .bar:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+
+        /* Media Query for mobile nav links removal */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu {
+                display: flex;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .header {
+                padding: 15px 20px;
+            }
+
+            .social-links {
+                display: none;
+            }
+
+            .mobile-menu .social-links {
+                display: flex;
+                margin-top: 20px;
+                gap: 20px;
+            }
+
+            .mobile-menu .social-links a {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+
+    <header class="header">
+        <div class="logo">
+            <a href="index.html">
+                <div class="logo-border">
+                    <img src="Assets/logo.jpeg" alt="Label Reeha" class="logo-img">
+                </div>
+                <span class="brand-name">Label Reeha</span>
+            </a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="About.html">About</a></li>
+            <li><a href="Shop.html">Shop</a></li>
+            <li><a href="Contacts.html">Contact</a></li>
+        </ul>
+
+        <ul class="nav-links mobile-menu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="About.html">About</a></li>
+            <li><a href="Shop.html">Shop</a></li>
+            <li><a href="Contacts.html">Contact</a></li>
+            <li>
+                <div class="social-links">
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </li>
+        </ul>
+
+        <div class="hamburger">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+        <div class="social-links">
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        </div>
+    </header>
+
+    <section class="pt-24 pb-12 px-6 md:px-12 bg-brand-cream">
+        <div class="max-w-7xl mx-auto text-center reveal-up">
+            <h1 class="font-display text-6xl md:text-8xl font-extrabold leading-none text-brand-dark">
+                GET IN <span class="text-brand-gold">TOUCH</span>
+            </h1>
+            <p class="mt-4 text-xl md:text-2xl font-serif italic text-gray-600 max-w-3xl mx-auto reveal-up">
+                For bespoke inquiries, press, or general questions, we are here to assist.
+            </p>
+        </div>
+    </section>
+
+    <section class="py-24 px-6 md:px-12">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-16">
+
+            <div class="lg:col-span-1">
+
+                <h2 class="font-display text-3xl font-bold mb-8 mt-12 reveal-up">Direct Inquiry</h2>
+
+                <div class="space-y-4 reveal-up">
+                    <a href="https://wa.me/1234567890?text=I'm%20interested%20in%20your%20jewelry." target="_blank"
+                        class="dm-button dm-whatsapp w-full hover-trigger">
+                        <i class="fab fa-whatsapp"></i> WhatsApp DM
+                    </a>
+                    <a href="https://m.me/YourFacebookPageName" target="_blank"
+                        class="dm-button dm-facebook w-full hover-trigger">
+                        <i class="fab fa-facebook-messenger"></i> Facebook DM
+                    </a>
+                    <a href="https://ig.me/m/YourInstagramHandle" target="_blank"
+                        class="dm-button dm-instagram w-full hover-trigger">
+                        <i class="fab fa-instagram"></i> Instagram DM
+                    </a>
+                </div>
+            </div>
+
+            <div class="lg:col-span-2 reveal-up">
+                <h2 class="font-display text-3xl font-bold mb-8">Send Us a Message</h2>
+                <form class="space-y-6">
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                        <input type="text" id="name" name="name"
+                            class="w-full border border-gray-300 px-4 py-3 bg-white text-brand-dark focus:border-brand-gold focus:ring-brand-gold focus:outline-none transition-colors hover-trigger"
+                            required>
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                        <input type="email" id="email" name="email"
+                            class="w-full border border-gray-300 px-4 py-3 bg-white text-brand-dark focus:border-brand-gold focus:ring-brand-gold focus:outline-none transition-colors hover-trigger"
+                            required>
+                    </div>
+                    <div>
+                        <label for="subject" class="block text-sm font-medium text-gray-700 mb-2">Subject</label>
+                        <select id="subject" name="subject"
+                            class="w-full border border-gray-300 px-4 py-3 bg-white text-brand-dark focus:border-brand-gold focus:ring-brand-gold focus:outline-none transition-colors hover-trigger">
+                            <option>General Inquiry</option>
+                            <option>Bespoke Commission</option>
+                            <option>Product In stock Check</option>
+                            <option>Press/Collaboration</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Your Message</label>
+                        <textarea id="message" name="message" rows="5"
+                            class="w-full border border-gray-300 px-4 py-3 bg-white text-brand-dark focus:border-brand-gold focus:ring-brand-gold focus:outline-none transition-colors hover-trigger"
+                            required></textarea>
+                    </div>
+                    <button type="submit"
+                        class="btn-luxury bg-brand-dark text-white px-8 py-3 uppercase tracking-widest text-sm hover:bg-brand-gold hover:text-brand-dark hover-trigger transition-colors">
+                        Send Message
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-[#111] text-white pt-24 pb-12 px-6 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+            <div class="col-span-1 md:col-span-1">
+                <a href="#" class="flex items-center mb-6">
+                    <div class="logo-border">
+                        <img src="Assets/logo.jpeg" alt="Label Reeha"
+                            class="h-16 w-auto opacity-90 hover:opacity-100 transition-opacity">
+                    </div>
+                    <span class="brand-name text-lg">Label Reeha</span>
+                </a>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                    To share the spirit of Assam with the world “One handcrafted piece at a time"
+                </p>
+            </div>
+
+            <div>
+                <h4 class="font-serif text-lg mb-6 text-[#D4AF37]">Shop</h4>
+                <ul class="space-y-4 text-gray-400 text-sm">
+                    <li><a href="Shop.html" class="hover:text-white transition-colors hover-trigger">New Arrivals</a>
+                    </li>
+                    <li><a href="Shop.html" class="hover:text-white transition-colors hover-trigger">Best Sellers</a>
+                    </li>
+                    <li><a href="Shop.html" class="hover:text-white transition-colors hover-trigger">Most Popular</a>
+                    </li>
+                    <li><a href="Shop.html" class="hover:text-white transition-colors hover-trigger">Featured</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-serif text-lg mb-6 text-[#D4AF37]">Company</h4>
+                <ul class="space-y-4 text-gray-400 text-sm">
+                    <li><a href="About.html" class="hover:text-white transition-colors hover-trigger">Our Story</a></li>
+                    <li><a href="Shop.html" class="hover:text-white transition-colors hover-trigger">Shop</a></li>
+                    <li><a href="index.html" class="hover:text-white transition-colors hover-trigger">Home</a></li>
+                    <li><a href="Contacts.html" class="hover:text-white transition-colors hover-trigger">Contact</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-serif text-lg mb-6 text-[#D4AF37]">Connect</h4>
+                <div class="flex space-x-6 mb-6 text-xl">
+                    <a href="#" class="hover:text-[#D4AF37] transition-colors hover-trigger"><i
+                            class="fab fa-instagram"></i></a>
+                    <a href="#" class="hover:text-[#D4AF37] transition-colors hover-trigger"><i
+                            class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="hover:text-[#D4AF37] transition-colors hover-trigger"><i
+                            class="fab fa-whatsapp"></i></a>
+                </div>
+                <p class="text-gray-500 text-xs">© 2026 Label Reeha Jewelry. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+        gsap.registerPlugin(ScrollTrigger);
+
+        // --- Custom Cursor Logic (Copied from main page) ---
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorOutline = document.querySelector('.cursor-outline');
+        const hoverTriggers = document.querySelectorAll('.hover-trigger');
+
+        window.addEventListener('mousemove', (e) => {
+            if (window.matchMedia("(hover: none)").matches) return;
+            const posX = e.clientX;
+            const posY = e.clientY;
+
+            cursorDot.style.left = `${posX}px`;
+            cursorDot.style.top = `${posY}px`;
+
+            cursorOutline.animate({
+                left: `${posX}px`,
+                top: `${posY}px`
+            }, { duration: 500, fill: "forwards" });
+        });
+
+        // Hover effects for cursor
+        hoverTriggers.forEach(trigger => {
+            trigger.addEventListener('mouseenter', () => {
+                cursorOutline.style.width = '60px';
+                cursorOutline.style.height = '60px';
+                cursorOutline.style.backgroundColor = 'rgba(212, 175, 55, 0.1)';
+                cursorOutline.style.borderColor = 'transparent';
+            });
+
+            trigger.addEventListener('mouseleave', () => {
+                cursorOutline.style.width = '40px';
+                cursorOutline.style.height = '40px';
+                cursorOutline.style.backgroundColor = 'transparent';
+                cursorOutline.style.borderColor = 'rgba(26, 26, 26, 0.5)';
+            });
+        });
+
+
+        // --- GSAP Scroll Animations ---
+        // Reveal Up General Class
+        gsap.utils.toArray('.reveal-up').forEach(elem => {
+            gsap.from(elem, {
+                scrollTrigger: {
+                    trigger: elem,
+                    start: "top 90%"
+                },
+                y: 40,
+                opacity: 0,
+                stagger: 0.1,
+                duration: 1
+            });
+        });
+
+        // Toggle Mobile Menu
+        const hamburger = document.querySelector(".hamburger");
+        const mobileMenu = document.querySelector(".mobile-menu");
+
+        if (hamburger) {
+            hamburger.addEventListener("click", () => {
+                hamburger.classList.toggle("active");
+                mobileMenu.classList.toggle("active");
+            });
+        }
+
+        document.querySelectorAll(".mobile-menu a").forEach(n => n.addEventListener("click", () => {
+            hamburger.classList.remove("active");
+            mobileMenu.classList.remove("active");
+        }));
+    </script>
+
+</body>
+
+</html>
