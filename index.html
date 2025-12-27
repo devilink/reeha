@@ -126,10 +126,10 @@
         }
 
         .logo-img {
-            height: 55px;
+            height: 65px;
             /* Desktop Height */
             width: auto;
-            object-fit: contain;
+            object-fit: cover;
             transition: transform 0.3s ease;
         }
 
@@ -142,8 +142,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            width: 55px;
-            height: 55px;
+            width: 80px;
+            height: 80px;
             padding: 2px;
             /* Border thickness */
             border-radius: 50%;
@@ -155,7 +155,7 @@
         .logo-border img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
             border-radius: 50%;
             display: block;
         }
@@ -443,7 +443,7 @@
 
         .reveal-img-container img {
             transition: transform 1s cubic-bezier(0.075, 0.82, 0.165, 1), filter 0.5s;
-            filter: grayscale(100%);
+            /* filter: grayscale(100%);  Removed as per request */
         }
 
         .reveal-img-container:hover img {
@@ -622,6 +622,8 @@
             </div>
             <div class="carousel-slide" style="background-image: url('Assets/hero2.png');">
             </div>
+            <div class="carousel-slide" style="background-image: url('Assets/hero.png');">
+            </div>
 
             <div class="hero-overlay">
                 <h1>ASSAM IN<br>EVERY THREAD</h1>
@@ -683,7 +685,7 @@
                     </div>
                 </div>
                 <div class="text-center">
-                    <h3 class="text-xl mb-1">Elegance piece in Assamese Silk</h3>
+                    <h3 class="text-xl mb-1">A beautiful set by artisan crafted textile form Assam</h3>
                 </div>
             </div>
         </div>
@@ -713,8 +715,9 @@
                     Philosophy</a>
             </div>
             <div class="md:col-span-7">
-                <div class="aspect-[4/3] reveal-img-container">
-                    <img src="Assets/model1.png" alt="Editorial Shot" class="w-full h-full object-cover">
+                <div class="aspect-[4/4] reveal-img-container">
+                    <img src="Assets/about.jpeg" alt="Editorial Shot" class="w-full h-full object-cover"
+                        style="object-position: 50% 35%;">
                 </div>
             </div>
         </div>
