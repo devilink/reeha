@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Love - Label Reeha</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Lato:wght@300;400&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Anonymous+Pro:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Inter:wght@300;400;500&display=swap"
+        rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-dark': '#1a1a1a',
+                        'brand-gold': '#d4af37',
+                        'brand-cream': '#f5f0eb',
+                        'brand-gray': '#8c8c8c',
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Lato"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /*
+        ========================================
+        1. GLOBAL AND RESET STYLES
+        ========================================
+        */
+        :root {
+            --bg-color: #050505;
+            --text-color: #e0e0e0;
+            --accent-color: #ffffff;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            color: #1a1a1a;
+            cursor: none;
+            background-color: #f9f7f2;
+            overflow-x: hidden;
+        }
+
+        /* Custom Cursor */
+        .cursor-dot,
+        .cursor-outline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #1a1a1a;
+        }
+
+        .cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(26, 26, 26, 0.5);
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+        }
+
+        body.hovering .cursor-outline {
+            width: 60px;
+            height: 60px;
+            background-color: rgba(212, 175, 55, 0.1);
+            border-color: #d4af37;
+        }
+
+        /*
+        ========================================
+        2. NAVIGATION BAR STYLES
+        ========================================
+        */
+        .header {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            box-sizing: border-box;
+            background-color: rgba(255, 255, 255, 0.95);
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* LOGO STYLES */
+        .logo a {
+            display: block;
+            text-decoration: none;
+        }
+
+        .logo-img {
+            height: 65px;
+            /* Desktop Height */
+            width: auto;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+
+        .logo-img:hover {
+            transform: scale(1.1);
+        }
+
+        .logo-border {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 80px;
+            height: 80px;
+            padding: 2px;
+            /* Border thickness */
+            border-radius: 50%;
+            background: linear-gradient(135deg, #b8860b, #d4af37, #f3e5ab, #d4af37, #b8860b);
+            box-shadow: 0 2px 10px rgba(212, 175, 55, 0.2);
+            flex-shrink: 0;
+        }
+
+        .logo-border img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 50%;
+            display: block;
+        }
+
+        .brand-name {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-left: 12px;
+            background: linear-gradient(135deg, #b8860b, #d4af37, #f3e5ab, #d4af37, #b8860b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+
+        .logo a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        /* Hamburger Menu Icon */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            z-index: 2000;
+        }
+
+        .bar {
+            display: block;
+            width: 25px;
+            height: 2px;
+            margin: 5px auto;
+            -webkit-transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out;
+            background-color: #5d4a36;
+        }
+
+        /* Mobile Menu Overlay */
+        .mobile-menu {
+            position: fixed;
+            left: -100%;
+            top: 0;
+            gap: 0;
+            flex-direction: column;
+            background-color: #f9f7f2;
+            width: 100%;
+            height: 100vh;
+            text-align: center;
+            transition: 0.3s;
+            z-index: 1500;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .mobile-menu.active {
+            left: 0;
+        }
+
+        .mobile-menu li {
+            margin: 20px 0;
+        }
+
+        .mobile-menu a {
+            font-size: 1.5rem;
+        }
+
+        /* Hamburger Animation */
+        .hamburger.active .bar:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active .bar:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+
+        .hamburger.active .bar:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+        .nav-links a {
+            color: #5d4a36;
+            text-decoration: none;
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 0.9em;
+            letter-spacing: 1.5px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #af9b89;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 18px;
+            white-space: nowrap;
+        }
+
+        .social-links a {
+            color: #5d4a36;
+            font-size: 1.1em;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #af9b89;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #111;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /*
+        ========================================
+        4. MEDIA QUERIES
+        ========================================
+        */
+        @media (max-width: 1100px) {
+            .nav-links {
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .nav-links {
+                gap: 15px;
+            }
+
+            .nav-links a {
+                font-size: 0.8em;
+            }
+
+            .logo-img {
+                height: 45px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 10px 20px;
+            }
+
+            .logo-img {
+                height: 40px;
+                /* Smaller Logo for Mobile */
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu {
+                display: flex;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .social-links {
+                display: none;
+            }
+
+            .mobile-menu .social-links {
+                display: flex;
+                margin-top: 20px;
+                gap: 20px;
+            }
+
+            .mobile-menu .social-links a {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+
+    <header class="header">
+        <div class="logo">
+            <a href="index.html">
+                <div class="logo-border">
+                    <img src="Assets/logo.jpeg" alt="Label Reeha" class="logo-img">
+                </div>
+                <span class="brand-name">Label Reeha</span>
+            </a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="About.html">About</a></li>
+            <li><a href="Shop.html">Shop</a></li>
+            <li><a href="Testimonial.html">Testimonials</a></li>
+            <li><a href="Contacts.html">Contact</a></li>
+        </ul>
+
+        <ul class="nav-links mobile-menu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="About.html">About</a></li>
+            <li><a href="Shop.html">Shop</a></li>
+            <li><a href="Testimonial.html">Testimonials</a></li>
+            <li><a href="Contacts.html">Contact</a></li>
+            <li>
+                <div class="social-links">
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </li>
+        </ul>
+
+        <div class="hamburger">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+        <div class="social-links">
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="page-hero pt-24 pb-12 px-6 md:px-12">
+        <div class="max-w-4xl mx-auto text-center" style="opacity: 0; transform: translateY(20px);" id="hero-content">
+            <h1 class="text-4xl md:text-6xl font-serif text-[#d4af37] mb-6">In Their Own Words...</h1>
+            <p class="text-gray-600 font-bold">Hear from our cherished community. Your stories make us who we are.</p>
+        </div>
+    </section>
+
+    <!-- Written Testimonials Section -->
+    <section class="py-16 px-6 bg-[#f5f0eb]">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div
+                    class="bg-white p-8 rounded-xl shadow-lg reveal-up border border-gray-100 hover:shadow-xl transition-shadow duration-300">
+                    <div class="text-[#d4af37] text-4xl font-serif mb-4">“</div>
+                    <p class="text-gray-600 italic mb-6 leading-relaxed">
+                        I am absolutely in love with my necklace! It’s even more beautiful in person. The craftsmanship
+                        is
+                        stunning, and it feels so special to wear something with such history.
+                    </p>
+                    <div class="flex items-center">
+                        <div
+                            class="w-10 h-10 rounded-full bg-[#d4af37] text-white flex items-center justify-center font-bold font-serif text-lg mr-3">
+                            A
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-800 text-sm uppercase tracking-wide">Ananya S.</h4>
+                            <span class="text-xs text-gray-500">Bangalore</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div
+                    class="bg-white p-8 rounded-xl shadow-lg reveal-up border border-gray-100 hover:shadow-xl transition-shadow duration-300">
+                    <div class="text-[#d4af37] text-4xl font-serif mb-4">“</div>
+                    <p class="text-gray-600 italic mb-6 leading-relaxed">
+                        Label Reeha's collection is a treasure. I gifted a set to my mother, and she was moved to tears.
+                        The
+                        packaging was elegant, and the personal note was a lovely touch.
+                    </p>
+                    <div class="flex items-center">
+                        <div
+                            class="w-10 h-10 rounded-full bg-[#d4af37] text-white flex items-center justify-center font-bold font-serif text-lg mr-3">
+                            P
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-800 text-sm uppercase tracking-wide">Priya M.</h4>
+                            <span class="text-xs text-gray-500">Mumbai</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div
+                    class="bg-white p-8 rounded-xl shadow-lg reveal-up border border-gray-100 hover:shadow-xl transition-shadow duration-300">
+                    <div class="text-[#d4af37] text-4xl font-serif mb-4">“</div>
+                    <p class="text-gray-600 italic mb-6 leading-relaxed">
+                        Authentic, beautiful, and timeless. I wear my earrings with everything, from sarees to jeans.
+                        It’s
+                        rare to find traditional jewelry that feels so versatile.
+                    </p>
+                    <div class="flex items-center">
+                        <div
+                            class="w-10 h-10 rounded-full bg-[#d4af37] text-white flex items-center justify-center font-bold font-serif text-lg mr-3">
+                            S
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-800 text-sm uppercase tracking-wide">Sneha R.</h4>
+                            <span class="text-xs text-gray-500">Delhi</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Proofs Section -->
+    <section class="py-16 px-6">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl font-serif text-center mb-12 text-[#5d4a36] reveal-up">Social Media Proofs</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Placeholders -->
+                <div
+                    class="collection-item group relative aspect-square bg-gray-100 overflow-hidden rounded-xl shadow-lg">
+                    <div class="absolute inset-0 flex items-center justify-center text-gray-400">
+                        <span class="text-lg">Customer Image</span>
+                    </div>
+                </div>
+                <div
+                    class="collection-item group relative aspect-square bg-gray-100 overflow-hidden rounded-xl shadow-lg">
+                    <div class="absolute inset-0 flex items-center justify-center text-gray-400">
+                        <span class="text-lg">Customer Video</span>
+                    </div>
+                </div>
+                <div
+                    class="collection-item group relative aspect-square bg-gray-100 overflow-hidden rounded-xl shadow-lg">
+                    <div class="absolute inset-0 flex items-center justify-center text-gray-400">
+                        <span class="text-lg">Customer Image</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feedback Form Section -->
+    <section class="py-16 px-6 bg-white">
+        <div class="max-w-3xl mx-auto text-center reveal-up">
+            <h2 class="text-3xl font-serif mb-8 text-[#5d4a36]">We Value Your Feedback</h2>
+            <p class="text-gray-600 mb-8">Help us improve your experience with Label Reeha.</p>
+            <form class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <input type="text" placeholder="Your Name"
+                        class="w-full px-4 py-3 border border-gray-300 rounded focus:border-[#d4af37] focus:outline-none transition-colors hover-trigger">
+                    <input type="email" placeholder="Your Email"
+                        class="w-full px-4 py-3 border border-gray-300 rounded focus:border-[#d4af37] focus:outline-none transition-colors hover-trigger">
+                </div>
+                <textarea placeholder="Your Message" rows="4"
+                    class="w-full px-4 py-3 border border-gray-300 rounded focus:border-[#d4af37] focus:outline-none transition-colors hover-trigger"></textarea>
+                <button type="submit"
+                    class="bg-[#1a1a1a] text-white px-8 py-3 uppercase tracking-widest text-sm hover:bg-[#d4af37] transition-colors hover-trigger">Submit
+                    Feedback</button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="bg-[#111] text-white pt-24 pb-12 px-6 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+            <div class="col-span-1 md:col-span-1">
+                <a href="#" class="flex items-center mb-6">
+                    <div class="logo-border">
+                        <img src="Assets/logo.jpeg" alt="Label Reeha"
+                            class="h-16 w-auto opacity-90 hover:opacity-100 transition-opacity">
+                    </div>
+                    <span class="brand-name text-lg">Label Reeha</span>
+                </a>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                    To share the spirit of Assam with the world “One handcrafted piece at a time"
+                </p>
+            </div>
+
+            <div>
+                <h4 class="font-serif text-lg mb-6 text-[#111]">Shop</h4>
+                <ul class="space-y-4 text-[#111] text-sm">
+                    <li><a href="Shop.html" class="hover:text-white transition-colors hover-trigger">New Arrivals</a>
+                    </li>
+                    <li><a href="Shop.html" class="hover:text-white transition-colors hover-trigger">Best Sellers</a>
+                    </li>
+                    <li><a href="Shop.html" class="hover:text-white transition-colors hover-trigger">Most Popular</a>
+                    </li>
+                    <li><a href="Shop.html" class="hover:text-white transition-colors hover-trigger">Featured</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-serif text-lg mb-6 text-[#D4AF37]">Company</h4>
+                <ul class="space-y-4 text-gray-400 text-sm">
+                    <li><a href="About.html" class="hover:text-white transition-colors hover-trigger">Our Story</a></li>
+                    <li><a href="Shop.html" class="hover:text-white transition-colors hover-trigger">Shop</a></li>
+                    <li><a href="index.html" class="hover:text-white transition-colors hover-trigger">Home</a></li>
+                    <li><a href="Contacts.html" class="hover:text-white transition-colors hover-trigger">Contact</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-serif text-lg mb-6 text-[#D4AF37]">Connect</h4>
+                <div class="flex space-x-6 mb-6 text-xl">
+                    <a href="#" class="hover:text-[#D4AF37] transition-colors hover-trigger"><i
+                            class="fab fa-instagram"></i></a>
+                    <a href="#" class="hover:text-[#D4AF37] transition-colors hover-trigger"><i
+                            class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="hover:text-[#D4AF37] transition-colors hover-trigger"><i
+                            class="fab fa-whatsapp"></i></a>
+                </div>
+                <p class="text-gray-500 text-xs">© 2026 Label Reeha Jewelry. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <script>
+
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Register GSAP Plugins
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Custom Cursor Logic
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorOutline = document.querySelector('.cursor-outline');
+        const hoverTriggers = document.querySelectorAll('.hover-trigger');
+
+        window.addEventListener('mousemove', (e) => {
+            // Disable custom cursor logic on touch devices
+            if (window.matchMedia("(hover: none)").matches) return;
+
+            const posX = e.clientX;
+            const posY = e.clientY;
+
+            // Dot follows immediately
+            cursorDot.style.left = `${posX}px`;
+            cursorDot.style.top = `${posY}px`;
+
+            // Outline follows with delay (handled by CSS transition or GSAP lag)
+            cursorOutline.animate({
+                left: `${posX}px`,
+                top: `${posY}px`
+            }, { duration: 500, fill: "forwards" });
+        });
+
+        // Hover effects for cursor
+        hoverTriggers.forEach(trigger => {
+            trigger.addEventListener('mouseenter', () => {
+                cursorOutline.style.width = '60px';
+                cursorOutline.style.height = '60px';
+                cursorOutline.style.backgroundColor = 'rgba(212, 175, 55, 0.1)';
+                cursorOutline.style.borderColor = 'transparent';
+            });
+
+            trigger.addEventListener('mouseleave', () => {
+                cursorOutline.style.width = '40px';
+                cursorOutline.style.height = '40px';
+                cursorOutline.style.backgroundColor = 'transparent';
+                cursorOutline.style.borderColor = 'rgba(26, 26, 26, 0.5)';
+            });
+        });
+
+        // Hero Animation
+        gsap.to("#hero-content", {
+            opacity: 1,
+            y: 0,
+            duration: 1.5,
+            ease: "power3.out"
+        });
+
+        // Reveal Up General Class
+        gsap.utils.toArray('.reveal-up').forEach(elem => {
+            gsap.from(elem, {
+                scrollTrigger: {
+                    trigger: elem,
+                    start: "top 85%"
+                },
+                y: 50,
+                opacity: 0,
+                duration: 1,
+                ease: "power2.out"
+            });
+        });
+
+        // Toggle Mobile Menu
+        const hamburger = document.querySelector(".hamburger");
+        const mobileMenu = document.querySelector(".mobile-menu");
+
+        if (hamburger) {
+            hamburger.addEventListener("click", () => {
+                hamburger.classList.toggle("active");
+                mobileMenu.classList.toggle("active");
+            });
+        }
+
+        // Close mobile menu when a link is clicked
+        document.querySelectorAll(".mobile-menu a").forEach(n => n.addEventListener("click", () => {
+            hamburger.classList.remove("active");
+            mobileMenu.classList.remove("active");
+        }));
+
+    </script>
+
+</body>
+
+</html>
