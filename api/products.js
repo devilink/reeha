@@ -9,7 +9,7 @@ AWS.config.update({
 
 const docClient = new AWS.DynamoDB.DocumentClient();
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
     // Only allow GET requests
     if (req.method !== 'GET') {
         res.setHeader('Allow', ['GET']);
