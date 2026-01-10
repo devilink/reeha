@@ -1,8 +1,8 @@
 const AWS = require('aws-sdk');
 
-// Initialize AWS with Environment Variables
+// Initialize AWS with Environment Variables (Region is hardcoded)
 AWS.config.update({
-    region: process.env.AWS_REGION || 'eu-north-1',
+    region: 'eu-north-1',
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
 });
@@ -17,7 +17,7 @@ export default async function handler(req, res) {
     }
 
     try {
-        const tableName = process.env.AWS_DYNAMODB_TABLE || 'Products';
+        const tableName = 'Products';
 
         const params = {
             TableName: tableName
