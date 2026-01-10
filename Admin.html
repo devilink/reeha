@@ -95,7 +95,45 @@
 
     <main class="flex-grow container mx-auto px-6 py-12 max-w-4xl">
 
-        <!-- AWS Configuration is now hardcoded in the script below -->
+        <!-- AWS Configuration Section -->
+        <section class="bg-white p-8 rounded-lg shadow-md mb-12 border border-[#eaeaea]">
+            <h2 class="text-2xl font-serif mb-6 flex items-center gap-3">
+                <i class="fas fa-cog text-brand-gold"></i> AWS Configuration
+            </h2>
+            <div class="space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs uppercase font-bold text-gray-500 mb-1">Region</label>
+                        <input type="text" id="aws-region" class="form-input" placeholder="e.g., ap-south-1">
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase font-bold text-gray-500 mb-1">DynamoDB Table Name</label>
+                        <input type="text" id="aws-table" class="form-input" placeholder="e.g., Products">
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs uppercase font-bold text-gray-500 mb-1">S3 Bucket Name</label>
+                        <input type="text" id="aws-bucket" class="form-input" placeholder="e.g., label-reeha-images">
+                    </div>
+                    <!-- Credentials (masked) -->
+                    <div>
+                        <label class="block text-xs uppercase font-bold text-gray-500 mb-1">Access Key ID</label>
+                        <input type="password" id="aws-access-key" class="form-input" placeholder="AWS Access Key">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs uppercase font-bold text-gray-500 mb-1">Secret Access Key</label>
+                    <input type="password" id="aws-secret-key" class="form-input" placeholder="AWS Secret Key">
+                </div>
+
+                <div class="flex justify-between items-center mt-4">
+                    <p class="text-xs text-red-500 italic">* Credentials are stored locally in your browser only.</p>
+                    <button id="save-config-btn" class="text-brand-gold text-sm font-bold hover:underline">Save
+                        Configuration</button>
+                </div>
+            </div>
+        </section>
 
         <!-- Product Upload Section -->
         <section class="bg-white p-8 rounded-lg shadow-md border border-[#eaeaea] relative">
@@ -209,14 +247,27 @@
     </main>
 
     <script>
-        // --- 1. CONFIGURATION ---
-        const AWS_CONFIG = {
-            region: 'eu-north-1',
-            tableName: 'Products',
-            bucketName: 'label-reeha-shop-images',
-            accessKeyId: 'YOUR_ACCESS_KEY_HERE',     // <--- PASTE YOUR ACCESS KEY ID HERE
-            secretAccessKey: 'YOUR_SECRET_KEY_HERE'  // <--- PASTE YOUR SECRET ACCESS KEY HERE
-        };
+        // --- 1. CONFIGURATION LODING/SAVING ---
+        const fields = ['aws-region', 'aws-table', 'aws-bucket', 'aws-access-key', 'aws-secret-key'];
+
+        function loadConfig() {
+            fields.forEach(field => {
+                const val = localStorage.getItem(field);
+                if (val) document.getElementById(field).value = val;
+            });
+        }
+
+        document.getElementById('save-config-btn').addEventListener('click', () => {
+            fields.forEach(field => {
+                const val = document.getElementById(field).value;
+                if (val) localStorage.setItem(field, val);
+            });
+            alert("Configuration Saved!");
+            location.reload();
+        });
+
+        // Initialize Config & Fetch Products
+        loadConfig();
 
 
         // --- 2. IMAGE PREVIEW ---
@@ -238,18 +289,22 @@
 
         // --- 3. FETCH & LIST LOGIC ---
         async function fetchProducts() {
-            if (!AWS_CONFIG.accessKeyId || AWS_CONFIG.accessKeyId.includes('YOUR_ACCESS')) {
-                // Keep silent or log
+            const region = document.getElementById('aws-region').value;
+            const tableName = document.getElementById('aws-table').value;
+            const accessKeyId = document.getElementById('aws-access-key').value;
+            const secretAccessKey = document.getElementById('aws-secret-key').value;
+
+            if (!region || !tableName || !accessKeyId || !secretAccessKey) {
+                // Keep silent or show a small message if config is missing
                 console.log("Waiting for credentials...");
                 return;
             }
 
             AWS.config.update({
-                region: AWS_CONFIG.region,
-                accessKeyId: AWS_CONFIG.accessKeyId,
-                secretAccessKey: AWS_CONFIG.secretAccessKey
+                region: region,
+                accessKeyId: accessKeyId,
+                secretAccessKey: secretAccessKey
             });
-            const tableName = AWS_CONFIG.tableName;
 
             const docClient = new AWS.DynamoDB.DocumentClient();
             const listBody = document.getElementById('product-list-body');
@@ -294,7 +349,7 @@
         async function deleteProduct(id) {
             if (!confirm("Are you sure you want to delete this product?")) return;
 
-            const tableName = AWS_CONFIG.tableName;
+            const tableName = document.getElementById('aws-table').value;
             const docClient = new AWS.DynamoDB.DocumentClient();
 
             try {
@@ -357,10 +412,14 @@
             e.preventDefault();
 
             // Get Config
-            const { region, tableName, bucketName, accessKeyId, secretAccessKey } = AWS_CONFIG;
+            const region = document.getElementById('aws-region').value;
+            const tableName = document.getElementById('aws-table').value;
+            const bucketName = document.getElementById('aws-bucket').value;
+            const accessKeyId = document.getElementById('aws-access-key').value;
+            const secretAccessKey = document.getElementById('aws-secret-key').value;
 
-            if (!accessKeyId || accessKeyId.includes('YOUR_ACCESS')) {
-                alert('Please set up the AWS Credentials in the source code!');
+            if (!region || !tableName || !bucketName || !accessKeyId || !secretAccessKey) {
+                alert('Please fill in all AWS Configuration fields first!');
                 return;
             }
 
