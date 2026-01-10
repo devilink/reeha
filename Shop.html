@@ -25,6 +25,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- AWS SDK -->
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1001.0.min.js"></script>
 
     <script>
         tailwind.config = {
@@ -431,211 +433,23 @@
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8" id="product-grid">
-
-
-
-                <div class="product-item" data-category="rings" data-name="Label Reeha-8">
-                    <div class="reveal-img-container aspect-[3/4] mb-4 cursor-pointer product-image-trigger">
-                        <img src="Assets/LR-8.jpg" alt="LR-8" class="w-full h-full object-cover"><img
-                            src="Assets/logo.jpeg"
-                            class="absolute top-2 right-2 w-8 h-8 rounded-full border border-white/50 z-10" alt="Logo">
-                    </div>
-                    <h3 class="font-serif text-xl mb-1">Label Reeha-8</h3>
-                    <p class="text-brand-dark font-medium mb-2">₹ 1,200</p>
-
-                    <div class="flex justify-between items-center">
-                        <span class="text-xs text-gray-500 uppercase tracking-widest font-bold">Inquire now <i
-                                class="fas fa-arrow-right ml-1"></i></span>
-                        <div class="flex space-x-3">
-                            <a href="https://www.instagram.com/p/DGkQ9bxP8LE/"
-                                class="icon-insta hover:scale-110 transition-transform hover-trigger"
-                                title="Instagram"><i class="fab fa-instagram text-2xl"></i></a>
-                            <a href="#" class="icon-fb hover:scale-110 transition-transform hover-trigger"
-                                title="Facebook"><i class="fab fa-facebook text-2xl"></i></a>
-                            <a href="https://wa.me/919773577782"
-                                class="icon-wa hover:scale-110 transition-transform hover-trigger" title="WhatsApp"><i
-                                    class="fab fa-whatsapp text-2xl"></i></a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="product-item" data-category="necklaces" data-name="Label Reeha-7">
-                    <div class="reveal-img-container aspect-[3/4] mb-4 cursor-pointer product-image-trigger">
-                        <img src="Assets/LR-7.jpg" alt="LR-7" class="w-full h-full object-cover"><img
-                            src="Assets/logo.jpeg"
-                            class="absolute top-2 right-2 w-8 h-8 rounded-full border border-white/50 z-10" alt="Logo">
-                    </div>
-                    <h3 class="font-serif text-xl mb-1">Label Reeha-7</h3>
-                    <p class="text-brand-dark font-medium mb-2">₹ 1000</p>
-
-                    <div class="flex justify-between items-center">
-                        <span class="text-xs text-gray-500 uppercase tracking-widest font-bold">Inquire now <i
-                                class="fas fa-arrow-right ml-1"></i></span>
-                        <div class="flex space-x-3">
-                            <a href="https://www.instagram.com/p/DGkP6GrvMuh/"
-                                class="icon-insta hover:scale-110 transition-transform hover-trigger"
-                                title="Instagram"><i class="fab fa-instagram text-2xl"></i></a>
-                            <a href="#" class="icon-fb hover:scale-110 transition-transform hover-trigger"
-                                title="Facebook"><i class="fab fa-facebook text-2xl"></i></a>
-                            <a href="#" class="icon-wa hover:scale-110 transition-transform hover-trigger"
-                                title="WhatsApp"><i class="fab fa-whatsapp text-2xl"></i></a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="product-item" data-category="earrings" data-name="Label Reeha-6">
-                    <div class="reveal-img-container aspect-[3/4] mb-4 cursor-pointer product-image-trigger">
-                        <img src="Assets/LR-6.jpg" alt="LR-6" class="w-full h-full object-cover"><img
-                            src="Assets/logo.jpeg"
-                            class="absolute top-2 right-2 w-8 h-8 rounded-full border border-white/50 z-10" alt="Logo">
-                    </div>
-                    <h3 class="font-serif text-xl mb-1">Label Reeha-6</h3>
-                    <p class="text-brand-dark font-medium mb-2">₹ 1,500</p>
-
-                    <div class="flex justify-between items-center">
-                        <span class="text-xs text-gray-500 uppercase tracking-widest font-bold">Inquire now <i
-                                class="fas fa-arrow-right ml-1"></i></span>
-                        <div class="flex space-x-3">
-                            <a href="https://www.instagram.com/p/DGkDkm8PPYS/"
-                                class="icon-insta hover:scale-110 transition-transform hover-trigger"
-                                title="Instagram"><i class="fab fa-instagram text-2xl"></i></a>
-                            <a href="#" class="icon-fb hover:scale-110 transition-transform hover-trigger"
-                                title="Facebook"><i class="fab fa-facebook text-2xl"></i></a>
-                            <a href="#" class="icon-wa hover:scale-110 transition-transform hover-trigger"
-                                title="WhatsApp"><i class="fab fa-whatsapp text-2xl"></i></a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="product-item" data-category="bracelets" data-name="Label Reeha-5">
-                    <div class="reveal-img-container aspect-[3/4] mb-4 cursor-pointer product-image-trigger">
-                        <img src="Assets/LR-5.jpg" alt="LR-5" class="w-full h-full object-cover"><img
-                            src="Assets/logo.jpeg"
-                            class="absolute top-2 right-2 w-8 h-8 rounded-full border border-white/50 z-10" alt="Logo">
-                    </div>
-                    <h3 class="font-serif text-xl mb-1">Label Reeha-5</h3>
-                    <p class="text-brand-dark font-medium mb-2">₹ 1,200</p>
-
-                    <div class="flex justify-between items-center">
-                        <span class="text-xs text-gray-500 uppercase tracking-widest font-bold">Inquire now <i
-                                class="fas fa-arrow-right ml-1"></i></span>
-                        <div class="flex space-x-3">
-                            <a href="https://www.instagram.com/p/DGj9JFxPHfl/"
-                                class="icon-insta hover:scale-110 transition-transform hover-trigger"
-                                title="Instagram"><i class="fab fa-instagram text-2xl"></i></a>
-                            <a href="#" class="icon-fb hover:scale-110 transition-transform hover-trigger"
-                                title="Facebook"><i class="fab fa-facebook text-2xl"></i></a>
-                            <a href="#" class="icon-wa hover:scale-110 transition-transform hover-trigger"
-                                title="WhatsApp"><i class="fab fa-whatsapp text-2xl"></i></a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="product-item" data-category="rings" data-name="Label Reeha-4">
-                    <div class="reveal-img-container aspect-[3/4] mb-4 cursor-pointer product-image-trigger">
-                        <img src="Assets/LR-4.jpg" alt="LR-4" class="w-full h-full object-cover"><img
-                            src="Assets/logo.jpeg"
-                            class="absolute top-2 right-2 w-8 h-8 rounded-full border border-white/50 z-10" alt="Logo">
-                    </div>
-                    <h3 class="font-serif text-xl mb-1">Label Reeha-4</h3>
-                    <p class="text-brand-dark font-medium mb-2">₹ 1000</p>
-
-                    <div class="flex justify-between items-center">
-                        <span class="text-xs text-gray-500 uppercase tracking-widest font-bold">Inquire now <i
-                                class="fas fa-arrow-right ml-1"></i></span>
-                        <div class="flex space-x-3">
-                            <a href="https://www.instagram.com/p/DGj9FraPPa7/"
-                                class="icon-insta hover:scale-110 transition-transform hover-trigger"
-                                title="Instagram"><i class="fab fa-instagram text-2xl"></i></a>
-                            <a href="#" class="icon-fb hover:scale-110 transition-transform hover-trigger"
-                                title="Facebook"><i class="fab fa-facebook text-2xl"></i></a>
-                            <a href="#" class="icon-wa hover:scale-110 transition-transform hover-trigger"
-                                title="WhatsApp"><i class="fab fa-whatsapp text-2xl"></i></a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="product-item" data-category="necklaces" data-name="Label Reeha-3">
-                    <div class="reveal-img-container aspect-[3/4] mb-4 cursor-pointer product-image-trigger">
-                        <img src="Assets/LR-3.jpg" alt="LR-3" class="w-full h-full object-cover"><img
-                            src="Assets/logo.jpeg"
-                            class="absolute top-2 right-2 w-8 h-8 rounded-full border border-white/50 z-10" alt="Logo">
-                    </div>
-                    <h3 class="font-serif text-xl mb-1">Label Reeha-3</h3>
-                    <p class="text-brand-dark font-medium mb-2">₹ 1,200</p>
-
-                    <div class="flex justify-between items-center">
-                        <span class="text-xs text-gray-500 uppercase tracking-widest font-bold">Inquire now <i
-                                class="fas fa-arrow-right ml-1"></i></span>
-                        <div class="flex space-x-3">
-                            <a href="https://www.instagram.com/p/DGj9B0LPrSk/"
-                                class="icon-insta hover:scale-110 transition-transform hover-trigger"
-                                title="Instagram"><i class="fab fa-instagram text-2xl"></i></a>
-                            <a href="#" class="icon-fb hover:scale-110 transition-transform hover-trigger"
-                                title="Facebook"><i class="fab fa-facebook text-2xl"></i></a>
-                            <a href="#" class="icon-wa hover:scale-110 transition-transform hover-trigger"
-                                title="WhatsApp"><i class="fab fa-whatsapp text-2xl"></i></a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="product-item" data-category="earrings" data-name="Label Reeha-2">
-                    <div class="reveal-img-container aspect-[3/4] mb-4 cursor-pointer product-image-trigger">
-                        <img src="Assets/LR-2.jpg" alt="LR-2" class="w-full h-full object-cover"><img
-                            src="Assets/logo.jpeg"
-                            class="absolute top-2 right-2 w-8 h-8 rounded-full border border-white/50 z-10" alt="Logo">
-                    </div>
-                    <h3 class="font-serif text-xl mb-1">Label Reeha-2</h3>
-                    <p class="text-brand-dark font-medium mb-2">₹ 1000</p>
-
-                    <div class="flex justify-between items-center">
-                        <span class="text-xs text-gray-500 uppercase tracking-widest font-bold">Inquire now <i
-                                class="fas fa-arrow-right ml-1"></i></span>
-                        <div class="flex space-x-3">
-                            <a href="https://www.instagram.com/p/DGj8uYJvwL-/"
-                                class="icon-insta hover:scale-110 transition-transform hover-trigger"
-                                title="Instagram"><i class="fab fa-instagram text-2xl"></i></a>
-                            <a href="#" class="icon-fb hover:scale-110 transition-transform hover-trigger"
-                                title="Facebook"><i class="fab fa-facebook text-2xl"></i></a>
-                            <a href="#" class="icon-wa hover:scale-110 transition-transform hover-trigger"
-                                title="WhatsApp"><i class="fab fa-whatsapp text-2xl"></i></a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="product-item" data-category="bracelets" data-name="Label Reeha-1">
-                    <div class="reveal-img-container aspect-[3/4] mb-4 cursor-pointer product-image-trigger">
-                        <img src="Assets/LR-1.jpg" alt="Label Reeha-1"
-                            class="w-full h-full object-cover object-[45%_center]"><img src="Assets/logo.jpeg"
-                            class="absolute top-2 right-2 w-8 h-8 rounded-full border border-white/50 z-10" alt="Logo">
-                    </div>
-                    <h3 class="font-serif text-xl mb-1">Label Reeha-1</h3>
-                    <p class="text-brand-dark font-medium mb-2">₹ 1000</p>
-
-                    <div class="flex justify-between items-center">
-                        <span class="text-xs text-gray-500 uppercase tracking-widest font-bold">Inquire now <i
-                                class="fas fa-arrow-right ml-1"></i></span>
-                        <div class="flex space-x-3">
-                            <a href="https://www.instagram.com/p/DGj8cWivy-V/"
-                                class="icon-insta hover:scale-110 transition-transform hover-trigger"
-                                title="Instagram"><i class="fab fa-instagram text-2xl"></i></a>
-                            <a href="#" class="icon-fb hover:scale-110 transition-transform hover-trigger"
-                                title="Facebook"><i class="fab fa-facebook text-2xl"></i></a>
-                            <a href="#" class="icon-wa hover:scale-110 transition-transform hover-trigger"
-                                title="WhatsApp"><i class="fab fa-whatsapp text-2xl"></i></a>
-                        </div>
-                    </div>
-                </div>
-
+                <!-- Products will be loaded dynamically here -->
             </div>
 
-            <div id="pagination-controls" class="flex justify-center items-center gap-2 mt-16 flex-wrap">
+            <!-- Loading Indicator -->
+            <div id="shop-loader" class="flex justify-center items-center py-20 w-full hidden">
+                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-gold"></div>
             </div>
 
-            <div id="no-results" class="text-center py-24 hidden">
-                <h3 class="font-display text-3xl text-gray-400">No items found matching your filter/search.</h3>
-                <p class="text-gray-500 mt-2">Try clearing the search or choosing another category.</p>
-            </div>
+        </div>
+
+        <div id="pagination-controls" class="flex justify-center items-center gap-2 mt-16 flex-wrap">
+        </div>
+
+        <div id="no-results" class="text-center py-24 hidden">
+            <h3 class="font-display text-3xl text-gray-400">No items found matching your filter/search.</h3>
+            <p class="text-gray-500 mt-2">Try clearing the search or choosing another category.</p>
+        </div>
 
         </div>
     </section>
@@ -778,37 +592,116 @@
         // --- PAGINATION, FILTERING & SEARCH LOGIC ---
         const categoryTabs = document.querySelectorAll('.category-tab');
         const searchInput = document.getElementById('product-search');
-        const products = document.querySelectorAll('.product-item');
+        const productGrid = document.getElementById('product-grid');
         const noResultsMessage = document.getElementById('no-results');
         const paginationContainer = document.getElementById('pagination-controls');
+        const loader = document.getElementById('shop-loader');
 
         // Settings
         const itemsPerPage = 8;
         let currentPage = 1;
-        let activeCategory = 'all';
-        let searchTerm = '';
-        let matchedProducts = [];
+        let allProducts = []; // Stores all fetched products
+        let displayedProducts = []; // Stores currently filtered/searched products
 
-        function updateProducts(resetPage = false) {
-            if (resetPage) currentPage = 1;
+        // COMMON WHATSAPP NUMBER - Change this to your actual number
+        const COMMON_WHATSAPP_NUMBER = "919773577782";
 
-            const currentSearchTerm = searchTerm.toLowerCase();
-            matchedProducts = [];
+        // --- PUBLIC AWS CONFIGURATION ---
+        // IMPORTANT: For the Shop to work for public visitors, you MUST fill these in.
+        // Use "Read-Only" credentials (permission to only Scan DynamoDB).
+        const AWS_CONFIG = {
+            region: 'eu-north-1', // e.g., 'ap-south-1'
+            tableName: 'Products', // e.g., 'Products'
+            accessKeyId: 'YOUR_READ_ONLY_ACCESS_KEY', // READ-ONLY KEY
+            secretAccessKey: 'YOUR_READ_ONLY_SECRET_KEY' // READ-ONLY SECRET
+        };
 
-            products.forEach(product => {
-                const productCategory = product.getAttribute('data-category');
-                const productName = product.getAttribute('data-name').toLowerCase();
+        // --- AWS & DYNAMODB FETCHING ---
+        function initShop() {
+            // 1. Try Public Config first (Priority for Customers)
+            if (AWS_CONFIG.region !== 'YOUR_AWS_REGION') {
+                AWS.config.update({
+                    region: AWS_CONFIG.region,
+                    accessKeyId: AWS_CONFIG.accessKeyId,
+                    secretAccessKey: AWS_CONFIG.secretAccessKey
+                });
+                fetchProducts(AWS_CONFIG.tableName);
+            }
+            // 2. Fallback to LocalStorage (For Admin testing on same machine)
+            else {
+                const region = localStorage.getItem('aws-region');
+                const tableName = localStorage.getItem('aws-table');
+                const accessKeyId = localStorage.getItem('aws-access-key');
+                const secretAccessKey = localStorage.getItem('aws-secret-key');
 
-                const categoryMatch = (activeCategory === 'all' || productCategory === activeCategory);
-                const searchMatch = productName.includes(currentSearchTerm);
-
-                if (categoryMatch && searchMatch) {
-                    matchedProducts.push(product);
+                if (region && tableName && accessKeyId && secretAccessKey) {
+                    AWS.config.update({
+                        region: region,
+                        accessKeyId: accessKeyId,
+                        secretAccessKey: secretAccessKey
+                    });
+                    fetchProducts(tableName);
+                } else {
+                    loader.classList.add('hidden');
+                    noResultsMessage.innerHTML = '<h3 class="font-display text-2xl text-red-400">Shop Not Configured</h3><p class="text-gray-500 mt-2">Please update the <code>AWS_CONFIG</code> in <code>Shop.html</code> with your read-only credentials.</p>';
+                    noResultsMessage.classList.remove('hidden');
                 }
-                product.style.display = 'none';
-            });
+            }
+        }
 
-            if (matchedProducts.length === 0) {
+        async function fetchProducts(tableName) {
+            const docClient = new AWS.DynamoDB.DocumentClient();
+            loader.classList.remove('hidden');
+            productGrid.innerHTML = ''; // Clear grid
+
+            try {
+                // Scan the entire table (fine for small-medium shops)
+                const data = await docClient.scan({ TableName: tableName }).promise();
+                allProducts = data.Items || [];
+
+                // Sort by name descending (Natural sort for numbers: "Label Reeha 10" comes before "Label Reeha 2")
+                allProducts.sort((a, b) => b.name.localeCompare(a.name, undefined, { numeric: true, sensitivity: 'base' }));
+
+                displayedProducts = [...allProducts];
+                renderProducts();
+            } catch (err) {
+                console.error("Error fetching products:", err);
+                noResultsMessage.innerHTML = '<h3 class="font-display text-2xl text-red-400">Error Loading Shop</h3><p class="text-gray-500 mt-2">' + err.message + '</p>';
+                noResultsMessage.classList.remove('hidden');
+            } finally {
+                loader.classList.add('hidden');
+            }
+        }
+
+        // --- RENDERING ---
+        function createProductCard(product) {
+            const whatsappLink = `https://wa.me/${COMMON_WHATSAPP_NUMBER}?text=I'm interested in ${encodeURIComponent(product.name)}`;
+
+            return `
+                <div class="product-item reveal-up" data-name="${product.name}">
+                    <div class="reveal-img-container aspect-[3/4] mb-4 cursor-pointer product-image-trigger">
+                        <img src="${product.imageUrl}" alt="${product.name}" class="w-full h-full object-cover">
+                        <img src="Assets/logo.jpeg" class="absolute top-2 right-2 w-8 h-8 rounded-full border border-white/50 z-10" alt="Logo">
+                    </div>
+                    <h3 class="font-serif text-xl mb-1">${product.name}</h3>
+                    <p class="text-brand-dark font-medium mb-2">₹ ${product.price}</p>
+
+                    <div class="flex justify-between items-center">
+                        <a href="${whatsappLink}" target="_blank" class="text-xs text-gray-500 uppercase tracking-widest font-bold hover:text-brand-gold transition-colors">Inquire now <i class="fas fa-arrow-right ml-1"></i></a>
+                        <div class="flex space-x-3">
+                            ${product.instaUrl ? `<a href="${product.instaUrl}" target="_blank" class="icon-insta hover:scale-110 transition-transform hover-trigger" title="Instagram"><i class="fab fa-instagram text-2xl"></i></a>` : ''}
+                            ${product.fbUrl ? `<a href="${product.fbUrl}" target="_blank" class="icon-fb hover:scale-110 transition-transform hover-trigger" title="Facebook"><i class="fab fa-facebook text-2xl"></i></a>` : ''}
+                            <a href="${whatsappLink}" target="_blank" class="icon-wa hover:scale-110 transition-transform hover-trigger" title="WhatsApp"><i class="fab fa-whatsapp text-2xl"></i></a>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderProducts() {
+            productGrid.innerHTML = '';
+
+            if (displayedProducts.length === 0) {
                 noResultsMessage.classList.remove('hidden');
                 paginationContainer.innerHTML = '';
                 return;
@@ -816,63 +709,66 @@
                 noResultsMessage.classList.add('hidden');
             }
 
-            const totalPages = Math.ceil(matchedProducts.length / itemsPerPage);
-            if (currentPage > totalPages) currentPage = totalPages;
-            if (currentPage < 1) currentPage = 1;
+            // Pagination Logic
+            const totalPages = Math.ceil(displayedProducts.length / itemsPerPage);
+            if (currentPage > totalPages) currentPage = 1;
 
             const startIndex = (currentPage - 1) * itemsPerPage;
             const endIndex = startIndex + itemsPerPage;
+            const pageItems = displayedProducts.slice(startIndex, endIndex);
 
-            const itemsToShow = matchedProducts.slice(startIndex, endIndex);
-            itemsToShow.forEach(product => {
-                product.style.display = 'block';
-                gsap.fromTo(product, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5 });
+            // Generate HTML
+            pageItems.forEach(product => {
+                productGrid.innerHTML += createProductCard(product);
             });
 
-            renderPaginationControls(totalPages);
-            attachCursorEvents(); // Re-attach cursor hover effects
+            renderPagination(totalPages);
+
+            // Re-initialize animations/interactions
+            // We need to re-run GSAP reveal for new elements if desired, or simple CSS fade-in
+            gsap.from("#product-grid .product-item", {
+                y: 20,
+                opacity: 0,
+                duration: 0.5,
+                stagger: 0.1,
+                clearProps: "all" // clear so hover effects work cleanly
+            });
+
+            attachCursorEvents();
         }
 
-        function renderPaginationControls(totalPages) {
+        function renderPagination(totalPages) {
             paginationContainer.innerHTML = '';
             if (totalPages <= 1) return;
 
             for (let i = 1; i <= totalPages; i++) {
                 const btn = document.createElement('button');
-                btn.textContent = i;
-                let classes = "w-10 h-10 flex items-center justify-center text-sm font-serif border transition-all duration-300 rounded-full cursor-pointer hover-trigger ";
+                btn.innerText = i;
+                btn.classList.add('w-10', 'h-10', 'rounded-full', 'border', 'border-gray-300', 'flex', 'items-center', 'justify-center', 'hover:bg-brand-gold', 'hover:text-white', 'transition-colors');
                 if (i === currentPage) {
-                    classes += "bg-brand-dark text-white border-brand-dark shadow-md";
-                } else {
-                    classes += "bg-white text-gray-500 border-gray-300 hover:border-brand-gold hover:text-brand-gold";
+                    btn.classList.add('bg-brand-gold', 'text-white', 'border-brand-gold');
                 }
-                btn.className = classes;
-                btn.addEventListener('click', () => {
+                btn.onclick = () => {
                     currentPage = i;
-                    updateProducts(false);
-                    document.getElementById('product-grid').scrollIntoView({ behavior: 'smooth', block: 'start' });
-                });
+                    renderProducts();
+                    window.scrollTo({ top: productGrid.offsetTop - 100, behavior: 'smooth' });
+                };
                 paginationContainer.appendChild(btn);
             }
         }
 
-        categoryTabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                categoryTabs.forEach(t => t.classList.remove('active', 'bg-brand-dark', 'text-white', 'border-brand-dark'));
-                categoryTabs.forEach(t => t.classList.add('bg-white', 'text-brand-dark', 'border-gray-300'));
-                tab.classList.remove('bg-white', 'text-brand-dark', 'border-gray-300');
-                tab.classList.add('active', 'bg-brand-dark', 'text-white', 'border-brand-dark');
-                activeCategory = tab.getAttribute('data-category');
-                updateProducts(true);
-            });
-        });
-
+        // --- FILTERING ---
         searchInput.addEventListener('input', (e) => {
-            searchTerm = e.target.value.trim();
-            updateProducts(true);
+            searchTerm = e.target.value.toLowerCase();
+            displayedProducts = allProducts.filter(p => p.name.toLowerCase().includes(searchTerm));
+            currentPage = 1; // Reset to first page
+            renderProducts();
         });
 
-        updateProducts(true);
+        // Initialize
+        initShop();
+
+
 
         // --- IMAGE POPUP MODAL LOGIC ---
         const modal = document.getElementById('product-modal');
