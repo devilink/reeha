@@ -30,7 +30,7 @@ const updates = [
     {
         name: "Label Reeha 121",
         instaUrl: "https://www.instagram.com/reel/DTZny9aj1-m/?igsh=dHJoNnJ3Zm02M2Ns",
-        fbUrl: "https://www.facebook.com/reel/"
+        fbUrl: "https://www.facebook.com/reel/2365809803937670"
     },
     {
         name: "Label Reeha 122",
