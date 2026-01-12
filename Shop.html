@@ -760,6 +760,13 @@
                     document.querySelector('.header').style.transform = 'translateY(-100%)';
 
                     gsap.fromTo(modalImg, { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4, ease: "back.out(1.7)" });
+
+                    // Find product data from displayedProducts
+                    const productName = trigger.closest('.product-item').dataset.name;
+                    const product = displayedProducts.find(p => p.name === productName);
+                    if (product) {
+                        updateModalLinks(product);
+                    }
                 }
             }
         });
@@ -772,6 +779,33 @@
         }
 
         closeModal.addEventListener('click', hideModal);
+
+        // Update Modal Links Dynamically
+        function updateModalLinks(product) {
+            const instaBtn = modal.querySelector('.icon-insta');
+            const fbBtn = modal.querySelector('.icon-fb');
+            const waBtn = modal.querySelector('.icon-wa');
+
+            // Instagram
+            if (product.instaUrl) {
+                instaBtn.href = product.instaUrl;
+                instaBtn.style.display = 'flex';
+            } else {
+                instaBtn.style.display = 'none';
+            }
+
+            // Facebook
+            if (product.fbUrl) {
+                fbBtn.href = product.fbUrl;
+                fbBtn.style.display = 'flex';
+            } else {
+                fbBtn.style.display = 'none';
+            }
+
+            // WhatsApp
+            const whatsappLink = `https://wa.me/${COMMON_WHATSAPP_NUMBER}?text=I'm interested in ${encodeURIComponent(product.name)}`;
+            waBtn.href = whatsappLink;
+        }
 
         // Close on Background Click
         modal.addEventListener('click', (e) => {
