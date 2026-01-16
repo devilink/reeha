@@ -653,16 +653,11 @@
                     <div class="reveal-img-container aspect-[3/4] mb-4 cursor-pointer product-image-trigger relative">
                         <img src="${product.imageUrl}" alt="${product.name}" class="w-full h-full object-contain">
                         <img src="Assets/logo.jpeg" class="absolute top-2 right-2 w-8 h-8 rounded-full border border-white/50 z-10" alt="Logo">
-                        ${(product.status && product.status !== 'Available') ? 
-                            `<div class="absolute top-2 left-2 px-2 py-1 text-[10px] font-bold uppercase tracking-widest text-white z-10 ${product.status === 'Unavailable' ? 'bg-red-600' : 'bg-brand-gold'}">
-                                ${product.status === 'Unavailable' ? 'Sold Out' : 'Made to Order'}
-                            </div>` 
-                        : ''}
                     </div>
                     <h3 class="font-serif text-xl mb-1">${product.name}</h3>
                     <p class="text-brand-dark font-medium mb-1">₹ ${product.price}</p>
-                    ${(product.status && product.status !== 'Available') ? 
-                        `<p class="text-xs font-bold uppercase mb-3 tracking-wide ${product.status === 'Unavailable' ? 'text-red-500' : 'text-brand-gold'}">${product.status}</p>`
+                    ${(product.status && product.status !== 'Available') ?
+                    `<p class="text-xs font-bold uppercase mb-3 tracking-wide ${product.status === 'Unavailable' ? 'text-red-500' : 'text-brand-gold'}">${product.status}</p>`
                     : '<div class="mb-2"></div>'}
 
                     <div class="flex justify-between items-center">
