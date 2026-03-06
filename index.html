@@ -23,6 +23,8 @@
         href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Inter:wght@300;400;500&display=swap"
         rel="stylesheet">
 
+    <link rel="preload" as="image" href="Assets/hero1.png">
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
@@ -631,8 +633,7 @@
 
     <section class="hero-section">
         <div class="carousel-container">
-            <div class="carousel-slide slide-sale" style="background-image: url('Assets/Sale.png');">
-            </div>
+
             <div class="carousel-slide" style="background-image: url('Assets/hero1.png');">
             </div>
             <div class="carousel-slide" style="background-image: url('Assets/hero2.png');">
@@ -652,33 +653,7 @@
         </div>
     </section>
 
-    <!-- Sale Promotion Section -->
-    <section class="py-8 mt-10 bg-gradient-to-r from-[#fff0f3] to-[#ffe4e6] border-b border-[#d4af37]/20">
-        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-4">
-            <div class="flex items-center gap-4 w-full md:w-auto justify-center md:justify-start">
-                <div
-                    class="flex h-12 w-12 items-center justify-center rounded-full bg-[#a94064]/10 text-[#a94064] shrink-0">
-                    <i class="fas fa-tag text-xl"></i>
-                </div>
-                <div class="text-center md:text-left">
-                    <h3 class="font-serif text-xl md:text-2xl text-[#5d4a36] font-medium">Hridoy Collection is Live</h3>
-                    <p class="text-gray-600 text-sm">Valid till 28th February.</p>
-                </div>
-            </div>
 
-            <div
-                class="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 w-full md:w-auto justify-center md:justify-end">
-                <div class="text-center md:text-right">
-                    <p class="font-serif text-2xl text-[#a94064]">Flat 10% OFF</p>
-                    <p class="text-xs tracking-widest uppercase text-gray-500">On all orders</p>
-                </div>
-                <a href="Shop.html"
-                    class="inline-block px-8 py-3 bg-[#a94064] text-[#f9f7f2] font-serif uppercase tracking-widest text-sm hover:bg-[#d4af37] transition-all duration-300 rounded-sm shadow-md hover:shadow-lg transform hover:-translate-y-0.5 whitespace-nowrap">
-                    Shop Now
-                </a>
-            </div>
-        </div>
-    </section>
 
     <section id="collections" class="py-24 px-6 md:px-12 max-w-7xl mx-auto">
         <div class="text-center mb-16 reveal-text">
@@ -689,7 +664,8 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div class="group cursor-pointer collection-item">
                 <div class="img-container aspect-[4/5] relative bg-gray-200 mb-4">
-                    <img src="Assets/coll1.jpeg" alt="Rings" class="w-full h-full object-cover">
+                    <img src="Assets/coll1.jpeg" alt="Rings" class="w-full h-full object-cover" loading="lazy"
+                        decoding="async">
 
                 </div>
                 <div class="text-center">
@@ -699,7 +675,8 @@
 
             <div class="group cursor-pointer collection-item md:mt-12">
                 <div class="img-container aspect-[4/5] relative bg-gray-200 mb-4">
-                    <img src="Assets/coll2.jpg" alt="Necklaces" class="w-full h-full object-cover">
+                    <img src="Assets/coll2.jpg" alt="Necklaces" class="w-full h-full object-cover" loading="lazy"
+                        decoding="async">
 
                 </div>
                 <div class="text-center">
@@ -709,7 +686,8 @@
 
             <div class="group cursor-pointer collection-item">
                 <div class="img-container aspect-[4/5] relative bg-gray-200 mb-4">
-                    <img src="Assets/coll3.png" alt="Earrings" class="w-full h-full object-cover">
+                    <img src="Assets/coll3.png" alt="Earrings" class="w-full h-full object-cover" loading="lazy"
+                        decoding="async">
 
                 </div>
                 <div class="text-center">
@@ -723,7 +701,8 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div class="group cursor-pointer collection-item">
                 <div class="img-container aspect-[4/5] relative bg-gray-200 mb-4">
-                    <img src="Assets/coll6.jpeg" alt="Rings" class="w-full h-full object-cover">
+                    <img src="Assets/coll6.jpeg" alt="Rings" class="w-full h-full object-cover" loading="lazy"
+                        decoding="async">
 
                 </div>
                 <div class="text-center">
@@ -734,7 +713,8 @@
 
             <div class="group cursor-pointer collection-item md:mt-12">
                 <div class="img-container aspect-[4/5] relative bg-gray-200 mb-4">
-                    <img src="Assets/coll5.jpeg" alt="Necklaces" class="w-full h-full object-cover">
+                    <img src="Assets/coll5.jpeg" alt="Necklaces" class="w-full h-full object-cover" loading="lazy"
+                        decoding="async">
 
                 </div>
                 <div class="text-center">
@@ -745,7 +725,8 @@
 
             <div class="group cursor-pointer collection-item">
                 <div class="img-container aspect-[4/5] relative bg-gray-200 mb-4">
-                    <img src="Assets/coll4.png" alt="Earrings" class="w-full h-full object-cover">
+                    <img src="Assets/coll4.png" alt="Earrings" class="w-full h-full object-cover" loading="lazy"
+                        decoding="async">
 
                 </div>
                 <div class="text-center">
@@ -785,7 +766,8 @@
                 <div class="md:w-1/3 order-1 md:order-2">
                     <div
                         class="image-container h-[400px] w-full md:w-[300px] mx-auto border-4 border-brand-gold transition-all duration-700">
-                        <img src="Assets/founder.jpeg" class="w-full h-full object-cover object-top" alt="Founder">
+                        <img src="Assets/founder.jpeg" class="w-full h-full object-cover object-top" alt="Founder"
+                            loading="lazy" decoding="async">
                     </div>
                 </div>
             </div>
@@ -983,16 +965,6 @@
                 });
                 // Activate the selected slide
                 slides[index].classList.add('active');
-
-                // Hide hero overlay text on the first slide (index 0)
-                const heroOverlay = document.querySelector('.hero-overlay');
-                if (index === 0) {
-                    heroOverlay.style.opacity = '0';
-                    heroOverlay.style.pointerEvents = 'none'; // Prevent clicking hidden button
-                } else {
-                    heroOverlay.style.opacity = '1';
-                    heroOverlay.style.pointerEvents = 'auto';
-                }
             }
 
             // Function to advance the carousel
