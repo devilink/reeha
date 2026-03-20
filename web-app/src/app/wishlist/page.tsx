@@ -28,11 +28,11 @@ export default function WishlistPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {wishlist.map((product) => (
                     <div key={product.id} className="bg-white border border-gray-100 rounded-lg overflow-hidden group shadow-sm hover:shadow-md transition-shadow">
-                        <div className="relative aspect-[3/4] bg-gray-50">
+                        <div className="relative aspect-[3/4] bg-gray-50 overflow-hidden">
                             {product.imageUrl ? (
-                                <Image src={product.imageUrl} alt={product.name} fill className="object-contain p-4" />
+                                <img src={product.imageUrl} alt={product.name} className="absolute inset-0 w-full h-full object-cover" />
                             ) : (
-                                <div className="w-full h-full flex items-center justify-center text-gray-300">No Image</div>
+                                <div className="absolute inset-0 flex items-center justify-center text-gray-300">No Image</div>
                             )}
                             <button
                                 onClick={() => removeFromWishlist(product.id)}

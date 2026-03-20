@@ -12,41 +12,85 @@ declare global {
     }
 }
 
+import { sendOrderEmail } from "@/actions/sendOrderEmail";
+
 export default function CartPage() {
     const { cart, removeFromCart, clearCart, cartCount } = useCart();
 
     const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
-    const handleCheckout = () => {
+    const handleCheckout = async () => {
         if (!process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID) {
             alert("Razorpay Key ID not configured!");
             return;
         }
 
-        const options = {
-            key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
-            amount: total * 100, // Amount in paise
-            currency: "INR",
-            name: "Label Reeha",
-            description: "Purchase from Label Reeha",
-            image: "/Assets/logo.jpeg",
-            handler: function (response: any) {
-                alert("Payment Successful! Payment ID: " + response.razorpay_payment_id);
-                clearCart();
-                // Here you would typically verify the payment on the server
-            },
-            prefill: {
-                name: "Customer Name",
-                email: "customer@example.com",
-                contact: "9999999999",
-            },
-            theme: {
-                color: "#d4af37",
-            },
-        };
+        try {
+            const res = await fetch("/api/create-order", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ amount: total }),
+            });
+            const data = await res.json();
 
-        const rzp1 = new window.Razorpay(options);
-        rzp1.open();
+            if (!res.ok || !data.order) {
+                alert("Failed to initiate payment. " + (data.error || ""));
+                return;
+            }
+
+            const options = {
+                key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+                amount: data.order.amount,
+                currency: data.order.currency,
+                name: "Label Reeha",
+                description: "Purchase from Label Reeha",
+                image: "/Assets/logo.jpeg",
+                order_id: data.order.id, // Mandatory for secure payment validation
+                handler: async function (response: any) {
+                    alert("Payment Successful! Payment ID: " + response.razorpay_payment_id);
+                    
+                    // Details to send to email
+                    const orderDetails = {
+                        paymentId: response.razorpay_payment_id,
+                        orderId: response.razorpay_order_id,
+                        items: cart.map(item => ({
+                            name: item.name,
+                            price: item.price,
+                            quantity: item.quantity
+                        })),
+                        total: total,
+                        customerName: options.prefill.name,
+                        customerEmail: options.prefill.email
+                    };
+
+                    try {
+                        await sendOrderEmail(orderDetails);
+                        console.log("Order email notification sent successfully.");
+                    } catch (e) {
+                        console.error("Failed to send order email:", e);
+                    }
+
+                    clearCart();
+                },
+                prefill: {
+                    name: "Customer Name",
+                    email: "customer@example.com",
+                    contact: "9999999999",
+                },
+                theme: {
+                    color: "#d4af37",
+                },
+            };
+
+            const rzp1 = new window.Razorpay(options);
+            rzp1.on("payment.failed", function (response: any) {
+                alert("Payment Failed: " + response.error.description);
+            });
+            rzp1.open();
+        } catch (error) {
+            console.error("Error launching razorpay checkout", error);
+            alert("Error launching payment gateway.");
+        }
     };
 
     if (cartCount === 0) {
@@ -63,7 +107,7 @@ export default function CartPage() {
 
     return (
         <div className="min-h-screen pt-12 pb-24 px-6 md:px-12 max-w-7xl mx-auto">
-            <Script src="https://checkout.razorpay.com/v1/checkout.js" />
+            <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
 
             <h1 className="text-4xl font-serif text-brand-dark mb-12 text-center md:text-left">Your Shopping Bag</h1>
 
@@ -74,7 +118,7 @@ export default function CartPage() {
                         <div key={item.id} className="flex gap-6 border-b border-gray-100 pb-8">
                             <div className="relative w-24 h-32 bg-gray-100 flex-shrink-0 rounded-md overflow-hidden">
                                 {item.imageUrl ? (
-                                    <Image src={item.imageUrl} alt={item.name} fill className="object-cover" />
+                                    <img src={item.imageUrl} alt={item.name} className="w-full h-full object-cover" />
                                 ) : (
                                     <div className="w-full h-full flex items-center justify-center text-xs text-gray-400">No Image</div>
                                 )}

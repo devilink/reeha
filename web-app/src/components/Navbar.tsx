@@ -3,17 +3,18 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, X, Instagram, Facebook, MessageCircle } from "lucide-react";
+import { Menu, X, Instagram, Facebook, MessageCircle, Heart, ShoppingBag } from "lucide-react";
 import { UserButton, useUser, SignInButton } from "@clerk/nextjs";
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
-    const { isLoaded, isSignedIn } = useUser();
+    const { isLoaded, isSignedIn, user } = useUser();
+    const isAdmin = isLoaded && isSignedIn && ["princedass000555@gmail.com", "princedas000555@gmail.com"].includes(user?.primaryEmailAddress?.emailAddress || "");
 
     const toggleMenu = () => setIsOpen(!isOpen);
 
     return (
-        <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur shadow-sm px-6 py-4 flex justify-between items-center">
+        <header className="sticky top-0 z-50 w-full bg-white/95 shadow-sm px-6 py-4 flex justify-between items-center">
             {/* --- Logo --- */}
             <div className="flex items-center">
                 <Link href="/" className="flex items-center gap-3 group">
@@ -47,45 +48,57 @@ export default function Navbar() {
                         </li>
                     ))}
                 </ul>
+            </nav>
 
+            {/* --- Right Actions --- */}
+            <div className="flex items-center gap-5 md:gap-6">
                 {/* --- User & Cart --- */}
-                <div className="flex items-center gap-6 border-l border-gray-200 pl-6">
+                <div className="flex items-center gap-5 md:gap-6 md:border-l md:border-gray-200 md:pl-6">
                     <Link href="/wishlist" className="text-[#5d4a36] hover:text-[#E1306C] transition-colors relative">
                         <span className="sr-only">Wishlist</span>
-                        <i className="far fa-heart text-lg"></i>
+                        <Heart className="w-[20px] h-[20px] md:w-[18px] md:h-[18px]" strokeWidth={2} />
                     </Link>
                     <Link href="/cart" className="text-[#5d4a36] hover:text-[#d4af37] transition-colors relative">
                         <span className="sr-only">Cart</span>
-                        <i className="fas fa-shopping-bag text-lg"></i>
+                        <ShoppingBag className="w-[20px] h-[20px] md:w-[18px] md:h-[18px]" strokeWidth={2} />
                     </Link>
-                    {isLoaded ? (
-                        isSignedIn ? (
-                            <UserButton />
-                        ) : (
-                            <SignInButton mode="modal">
-                                <button className="text-sm font-bold text-[#5d4a36] uppercase tracking-wider hover:text-[#d4af37]">
-                                    Login
-                                </button>
-                            </SignInButton>
-                        )
-                    ) : null}
+                    {isAdmin && (
+                        <Link href="/admin" className="hidden md:inline-block text-xs font-bold text-red-600 border border-red-600 px-2 py-1 rounded hover:bg-red-600 hover:text-white transition-colors">
+                            ADMIN
+                        </Link>
+                    )}
+                    <div className="hidden md:block">
+                        {isLoaded ? (
+                            isSignedIn ? (
+                                <UserButton />
+                            ) : (
+                                <SignInButton mode="modal">
+                                    <button className="text-sm font-bold text-[#5d4a36] uppercase tracking-wider hover:text-[#d4af37]">
+                                        Login
+                                    </button>
+                                </SignInButton>
+                            )
+                        ) : null}
+                    </div>
                 </div>
-            </nav>
 
-            {/* --- Mobile Menu Button --- */}
-            <button
-                className="md:hidden text-[#5d4a36] z-50 relative"
-                onClick={toggleMenu}
-            >
-                {isOpen ? <X size={28} /> : <Menu size={28} />}
-            </button>
+                {/* --- Mobile Menu Button --- */}
+                <button
+                    className="md:hidden z-[70] relative flex flex-col justify-between w-[25px] h-[16px] cursor-pointer transition-transform duration-300"
+                    onClick={toggleMenu}
+                >
+                    <span className={`block w-[25px] h-[2px] bg-[#5d4a36] transition-all duration-300 ease-in-out ${isOpen ? 'translate-y-[7px] rotate-45' : ''}`} />
+                    <span className={`block w-[25px] h-[2px] bg-[#5d4a36] transition-all duration-300 ease-in-out ${isOpen ? 'opacity-0' : ''}`} />
+                    <span className={`block w-[25px] h-[2px] bg-[#5d4a36] transition-all duration-300 ease-in-out ${isOpen ? '-translate-y-[7px] -rotate-45' : ''}`} />
+                </button>
+            </div>
 
             {/* --- Mobile Menu Overlay --- */}
             <div
-                className={`fixed inset-0 bg-[#f9f7f2] flex flex-col items-center justify-center gap-8 transition-transform duration-500 ease-in-out z-40 ${isOpen ? "translate-x-0" : "-translate-x-full"
+                className={`fixed inset-0 bg-[#f9f7f2] flex flex-col items-center justify-start pt-32 pb-12 overflow-y-auto gap-6 transition-transform duration-500 ease-in-out z-[60] ${isOpen ? "translate-x-0" : "-translate-x-full"
                     }`}
             >
-                <ul className="flex flex-col items-center gap-6 text-xl">
+                <ul className="flex flex-col items-center gap-5 text-xl">
                     {["Home", "About", "Shop", "Testimonials", "Contact"].map((item) => (
                         <li key={item}>
                             <Link
@@ -103,6 +116,13 @@ export default function Navbar() {
                             Cart
                         </Link>
                     </li>
+                    {isAdmin && (
+                        <li>
+                            <Link href="/admin" onClick={toggleMenu} className="text-red-600 font-bold uppercase tracking-widest">
+                                Admin Dashboard
+                            </Link>
+                        </li>
+                    )}
                 </ul>
 
                 <div className="flex gap-6 mt-4">

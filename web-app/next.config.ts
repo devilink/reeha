@@ -1,11 +1,15 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  turbopack: {
+    root: __dirname,
+  },
   images: {
+    qualities: [25, 50, 75, 100],
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'label-reeha-shop-images.s3.eu-north-1.amazonaws.com',
+        hostname: '*.amazonaws.com',
       },
       {
           protocol: 'https',

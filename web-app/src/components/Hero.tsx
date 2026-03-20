@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -21,8 +22,8 @@ export default function Hero() {
     }, []);
 
     return (
-        <section className="relative w-full h-[calc(90vh-80px)] mt-4 md:mt-8 flex justify-center overflow-hidden">
-            <div className="w-[96%] md:w-[96%] h-full relative rounded-[30px] overflow-hidden shadow-2xl">
+        <section className="h-[calc(100vh-80px)] mt-[80px] flex justify-center pb-[30px] overflow-hidden">
+            <div className="w-[96%] h-full relative rounded-[30px] overflow-hidden shadow-2xl">
                 <AnimatePresence initial={false}>
                     <motion.div
                         key={currentSlide}
@@ -30,16 +31,25 @@ export default function Hero() {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 1.5 }}
-                        className="absolute inset-0 bg-cover bg-center"
-                        style={{ backgroundImage: `url(${slides[currentSlide]})`, backgroundPosition: 'center 30%' }}
-                    />
+                        className="absolute inset-0"
+                    >
+                        <Image
+                            src={slides[currentSlide]}
+                            alt={`Hero Image ${currentSlide + 1}`}
+                            fill
+                            priority
+                            sizes="(max-width: 768px) 300vw, 100vw"
+                            className="object-cover object-[85%_center] md:object-[center_30%]"
+                            quality={100}
+                        />
+                    </motion.div>
                 </AnimatePresence>
 
                 {/* Overlay */}
                 <div className="absolute inset-0 bg-black/20" />
 
                 {/* Content */}
-                <div className="absolute top-1/2 left-[5%] md:left-[10%] -translate-y-1/2 z-10 text-white max-w-[90%] md:max-w-[800px]">
+                <div className="absolute top-1/2 left-[20px] md:left-[10%] -translate-y-1/2 z-10 text-white w-[65%] md:w-auto md:max-w-[800px] pr-[10px] md:pr-0">
                     <motion.h1
                         initial={{ y: 20, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}

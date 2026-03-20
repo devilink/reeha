@@ -1,5 +1,6 @@
 import { getProductById } from "@/actions/getProductById";
 import AddToCartButton from "@/components/AddToCartButton";
+import BuyNowButton from "@/components/BuyNowButton";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
@@ -26,17 +27,15 @@ export default async function ProductPage({ params }: PageProps) {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20">
                 {/* Image Section */}
-                <div className="relative aspect-[3/4] bg-gray-100 rounded-2xl overflow-hidden shadow-lg">
+                <div className="relative bg-gray-100 rounded-2xl overflow-hidden shadow-lg flex-shrink-0">
                     {product.imageUrl ? (
-                        <Image
+                        <img
                             src={product.imageUrl}
                             alt={product.name}
-                            fill
-                            className="object-cover"
-                            priority
+                            className="w-full h-auto object-cover"
                         />
                     ) : (
-                        <div className="w-full h-full flex items-center justify-center text-gray-400">No Image</div>
+                        <div className="w-full aspect-[3/4] flex items-center justify-center text-gray-400">No Image</div>
                     )}
                 </div>
 
@@ -55,6 +54,7 @@ export default async function ProductPage({ params }: PageProps) {
 
                     <div className="flex flex-col sm:flex-row gap-4">
                         <AddToCartButton product={product} />
+                        <BuyNowButton product={product} />
                     </div>
 
                     {/* Additional Details */}

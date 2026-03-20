@@ -14,7 +14,7 @@ export default function Footer() {
                 </div>
 
                 <div className="text-center md:text-right text-xs">
-                    <p>&copy; {new Date().getFullYear()} Label Reeha. All rights reserved.</p>
+                    <p suppressHydrationWarning>&copy; {new Date().getFullYear()} Label Reeha. All rights reserved.</p>
                 </div>
             </div>
         </footer>
