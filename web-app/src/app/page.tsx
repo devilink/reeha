@@ -160,7 +160,7 @@ export default function Home() {
               className="md:w-1/3 order-1 md:order-2"
             >
               <div className="relative w-full h-[400px] md:w-[350px] border-4 border-[#d4af37] shadow-2xl bg-[#1a1a1a] mx-auto overflow-hidden">
-                <img src="/Assets/founder.jpeg" alt="Founder" className="w-full h-full object-cover object-top p-2" />
+                <Image src="/Assets/founder.jpeg" alt="Founder" fill sizes="(max-width: 768px) 100vw, 350px" className="object-cover object-top p-2" />
               </div>
             </motion.div>
 

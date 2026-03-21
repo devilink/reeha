@@ -6,7 +6,7 @@ import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { DynamoDBDocumentClient, PutCommand, DeleteCommand } from "@aws-sdk/lib-dynamodb";
 import { revalidatePath } from "next/cache";
 
-const ADMIN_EMAILS = ["princedass000555@gmail.com", "princedas000555@gmail.com"];
+const ADMIN_EMAILS = ["labelreeha@gmail.com", "princedas000555@gmail.com"];
 
 function getAwsClients() {
     const region = process.env.AWS_REGION || "eu-north-1";

@@ -1,0 +1,127 @@
+/* Geoapify Autocomplete Styles — matched to Label Reeha brand */
+
+.geoapify-autocomplete-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.geoapify-autocomplete-container {
+  position: relative;
+  width: 100%;
+}
+
+/* Input field */
+.geoapify-autocomplete-input {
+  width: 100%;
+  border: 1px solid #e5e7eb;
+  padding: 0.75rem;
+  border-radius: 0.375rem;
+  background: white;
+  font-size: 0.875rem;
+  color: #1a1a1a;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.geoapify-autocomplete-input:focus {
+  border-color: #d4af37;
+  box-shadow: 0 0 0 1px #d4af37;
+}
+
+.geoapify-autocomplete-input::placeholder {
+  color: #9ca3af;
+  font-size: 0.875rem;
+}
+
+/* Clear button */
+.geoapify-close-button {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #9ca3af;
+  font-size: 18px;
+  line-height: 1;
+  padding: 4px;
+  transition: color 0.15s ease;
+}
+
+.geoapify-close-button:hover {
+  color: #ef4444;
+}
+
+/* Dropdown container */
+.geoapify-autocomplete-items {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-top: none;
+  border-radius: 0 0 0.5rem 0.5rem;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+  max-height: 280px;
+  overflow-y: auto;
+  margin-top: -1px;
+}
+
+/* Scrollbar styling */
+.geoapify-autocomplete-items::-webkit-scrollbar {
+  width: 5px;
+}
+.geoapify-autocomplete-items::-webkit-scrollbar-track {
+  background: transparent;
+}
+.geoapify-autocomplete-items::-webkit-scrollbar-thumb {
+  background: #d4af37;
+  border-radius: 10px;
+}
+
+/* Individual suggestion item */
+.geoapify-autocomplete-items div {
+  padding: 0.65rem 0.85rem;
+  cursor: pointer;
+  font-size: 0.8rem;
+  color: #374151;
+  border-bottom: 1px solid #f3f4f6;
+  transition: background-color 0.15s ease, color 0.15s ease;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  line-height: 1.4;
+}
+
+.geoapify-autocomplete-items div:last-child {
+  border-bottom: none;
+}
+
+.geoapify-autocomplete-items div:hover,
+.geoapify-autocomplete-items .active {
+  background-color: #faf7f0;
+  color: #92702a;
+}
+
+/* Icon in suggestion items */
+.geoapify-autocomplete-items .icon {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+  opacity: 0.5;
+}
+
+/* Address parts highlighting */
+.geoapify-autocomplete-items .main-part {
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.geoapify-autocomplete-items .secondary-part {
+  color: #6b7280;
+  font-size: 0.75rem;
+}

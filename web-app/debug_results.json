@@ -1,0 +1,32 @@
+[
+  {
+    "weight": 0.1,
+    "status": 200,
+    "couriers": 7,
+    "cheapest": 167
+  },
+  {
+    "weight": 0.2,
+    "status": 200,
+    "couriers": 7,
+    "cheapest": 167
+  },
+  {
+    "weight": 0.5,
+    "status": 200,
+    "couriers": 7,
+    "cheapest": 167
+  },
+  {
+    "weight": 0.8,
+    "status": 200,
+    "couriers": 7,
+    "cheapest": 324
+  },
+  {
+    "weight": 1,
+    "status": 200,
+    "couriers": 8,
+    "cheapest": 324
+  }
+]

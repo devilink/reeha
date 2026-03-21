@@ -9,7 +9,7 @@ import { UserButton, useUser, SignInButton } from "@clerk/nextjs";
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
     const { isLoaded, isSignedIn, user } = useUser();
-    const isAdmin = isLoaded && isSignedIn && ["princedass000555@gmail.com", "princedas000555@gmail.com"].includes(user?.primaryEmailAddress?.emailAddress || "");
+    const isAdmin = isLoaded && isSignedIn && ["labelreeha@gmail.com", "princedas000555@gmail.com"].includes(user?.primaryEmailAddress?.emailAddress || "");
 
     const toggleMenu = () => setIsOpen(!isOpen);
 
@@ -24,6 +24,8 @@ export default function Navbar() {
                                 src="/Assets/logo.jpeg"
                                 alt="Label Reeha"
                                 fill
+                                priority
+                                sizes="65px"
                                 className="object-contain"
                             />
                         </div>

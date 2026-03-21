@@ -75,13 +75,15 @@ export default function ShopClient({ initialProducts }: ShopClientProps) {
                     {displayedProducts.map((product, index) => (
                         <div key={product.id} className="group relative">
                             {/* Image Container with Reveal Effect from Shop.html */}
-                            <Link href={`/product/${product.id}`} className="block relative overflow-hidden mb-4 bg-gray-100 product-image-trigger">
+                            <Link href={`/product/${product.id}`} className="block relative overflow-hidden mb-4 bg-gray-100 product-image-trigger w-full aspect-[4/5]">
                                 {product.imageUrl ? (
-                                    <img
+                                    <Image
                                         src={product.imageUrl}
                                         alt={product.name}
-                                        loading={index < 4 ? "eager" : "lazy"}
-                                        className="w-full h-auto object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:scale-110"
+                                        fill
+                                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                        priority={index < 4}
+                                        className="object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:scale-110"
                                     />
                                 ) : (
                                     <div className="w-full aspect-[4/5] flex items-center justify-center text-gray-300">No Image</div>

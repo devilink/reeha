@@ -7,7 +7,7 @@ export const revalidate = 0;
 
 export default async function AdminPage() {
     const user = await currentUser();
-    const ADMIN_EMAILS = ["princedass000555@gmail.com", "princedas000555@gmail.com"];
+    const ADMIN_EMAILS = ["labelreeha@gmail.com", "princedas000555@gmail.com"];
 
     if (!ADMIN_EMAILS.includes(user?.primaryEmailAddress?.emailAddress || "")) {
         redirect("/");
