@@ -109,9 +109,11 @@ export default function ShopClient({ initialProducts }: ShopClientProps) {
 
                             {/* Status logic mimicking Shop.html markup */}
                             <div className="mb-3 h-4">
-                                {/* If product status was available:
-                                <p className="text-xs font-bold uppercase tracking-wide text-brand-gold">Available</p>
-                                */}
+                                {product.status && (
+                                    <p className={`text-xs font-bold uppercase tracking-wide ${product.status === 'Unavailable' ? 'text-red-500' : product.status === 'Available' ? 'text-green-600' : 'text-[#d4af37]'}`}>
+                                        {product.status}
+                                    </p>
+                                )}
                             </div>
 
                             <div className="flex justify-between items-center text-[#1a1a1a]">

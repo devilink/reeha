@@ -87,6 +87,15 @@ export default function NewProductPage() {
                         <textarea name="description" rows={4} className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-brand-gold outline-none" placeholder="Product details..." />
                     </div>
 
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                        <select name="status" className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-brand-gold outline-none bg-white">
+                            <option value="Available">Available</option>
+                            <option value="Unavailable">Unavailable</option>
+                            <option value="Sold Out. We can recreate it.">Sold Out. We can recreate it.</option>
+                        </select>
+                    </div>
+
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1">Instagram URL (Optional)</label>

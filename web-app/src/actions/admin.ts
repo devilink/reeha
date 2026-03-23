@@ -6,7 +6,7 @@ import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { DynamoDBDocumentClient, PutCommand, DeleteCommand } from "@aws-sdk/lib-dynamodb";
 import { revalidatePath } from "next/cache";
 
-const ADMIN_EMAILS = ["labelreeha@gmail.com", "princedas000555@gmail.com"];
+export const ADMIN_EMAILS = ["labelreeha@gmail.com", "princedas000555@gmail.com"];
 
 function getAwsClients() {
     const region = process.env.AWS_REGION || "eu-north-1";
@@ -25,7 +25,7 @@ function getAwsClients() {
     return { s3, db, region, tableName, bucketName };
 }
 
-async function checkAdmin() {
+export async function checkAdmin() {
     const user = await currentUser();
     if (!ADMIN_EMAILS.includes(user?.primaryEmailAddress?.emailAddress || "")) {
         throw new Error("Unauthorized");
@@ -40,6 +40,7 @@ export async function addProduct(formData: FormData) {
     const price = Number(formData.get("price"));
     const instaUrl = formData.get("instaUrl") as string;
     const fbUrl = formData.get("fbUrl") as string;
+    const status = formData.get("status") as string || "Available";
     
     if (!file || !name || !price) {
         throw new Error("Missing required fields");
@@ -72,6 +73,7 @@ export async function addProduct(formData: FormData) {
             imageUrl,
             instaUrl,
             fbUrl,
+            status,
             createdAt: new Date().toISOString()
         }
     }));
@@ -89,6 +91,7 @@ export async function updateProduct(formData: FormData) {
     const price = Number(formData.get("price"));
     const instaUrl = formData.get("instaUrl") as string;
     const fbUrl = formData.get("fbUrl") as string;
+    const status = formData.get("status") as string || "Available";
     let imageUrl = formData.get("currentImageUrl") as string;
     const file = formData.get("image") as File | null;
 
@@ -123,6 +126,7 @@ export async function updateProduct(formData: FormData) {
             imageUrl,
             instaUrl,
             fbUrl,
+            status,
             createdAt: formData.get("createdAt") as string || new Date().toISOString()
         }
     }));
