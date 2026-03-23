@@ -5,8 +5,7 @@ import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { DynamoDBDocumentClient, PutCommand, DeleteCommand } from "@aws-sdk/lib-dynamodb";
 import { revalidatePath } from "next/cache";
-
-export const ADMIN_EMAILS = ["labelreeha@gmail.com", "princedas000555@gmail.com"];
+import { checkAdmin } from "@/lib/auth";
 
 function getAwsClients() {
     const region = process.env.AWS_REGION || "eu-north-1";
@@ -23,13 +22,6 @@ function getAwsClients() {
     const db = DynamoDBDocumentClient.from(new DynamoDBClient({ region, credentials: { accessKeyId, secretAccessKey } }));
 
     return { s3, db, region, tableName, bucketName };
-}
-
-export async function checkAdmin() {
-    const user = await currentUser();
-    if (!ADMIN_EMAILS.includes(user?.primaryEmailAddress?.emailAddress || "")) {
-        throw new Error("Unauthorized");
-    }
 }
 
 export async function addProduct(formData: FormData) {
