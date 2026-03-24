@@ -184,9 +184,8 @@ export default function Home() {
             <motion.div variants={staggerItem} className="px-4 py-8 md:py-0">
               <div className="text-[#d4af37] mb-6 flex justify-center"><Truck size={40} strokeWidth={1.5} /></div>
               <h3 className="font-serif text-2xl mb-4 text-[#5d4a36]">Delivery</h3>
-              <div className="text-gray-600 space-y-2 text-sm leading-relaxed">
-                <p><strong>All over India:</strong><br />3-5 business days - INR 80<br /><span className="text-[#d4af37] text-xs font-semibold">(Free Shipping above Rs 1500)</span></p>
-                <p><strong>Next Day Delivery:</strong> INR 120</p>
+              <div className="text-gray-600 space-y-3 text-sm leading-relaxed">
+                <p><strong>All over India:</strong><br />5-7 business days<br /><span className="text-[#d4af37] text-xs font-semibold">(Free Shipping above Rs 3000)</span></p>
                 <p className="pt-2"><strong>Worldwide Delivery</strong></p>
                 <p className="pt-2"><strong>Return:</strong><br />Within 7 working days<br /><span className="italic text-xs">(Unboxing video mandatory)</span></p>
               </div>
