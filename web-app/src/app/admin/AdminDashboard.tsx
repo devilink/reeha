@@ -11,6 +11,9 @@ export default function AdminDashboard({ initialProducts }: { initialProducts: P
     const [editingProduct, setEditingProduct] = useState<Product | null>(null);
     const [isLoading, setIsLoading] = useState(false);
     const [previewImage, setPreviewImage] = useState<string | null>(null);
+    const [statusFilter, setStatusFilter] = useState("All");
+
+    const filteredProducts = products.filter(p => statusFilter === "All" || (p.status || "Available") === statusFilter);
 
     useEffect(() => {
         // AWS Config removed
@@ -126,6 +129,14 @@ export default function AdminDashboard({ initialProducts }: { initialProducts: P
                             <label className="block text-xs uppercase font-bold text-gray-500 mb-1">Price (₹)</label>
                             <input name="price" defaultValue={editingProduct?.price || ""} type="number" className="w-full p-3 border rounded focus:outline-none focus:border-[#d4af37]" placeholder="e.g., 1200" required />
                         </div>
+                        <div>
+                            <label className="block text-xs uppercase font-bold text-gray-500 mb-1">Status</label>
+                            <select name="status" defaultValue={editingProduct?.status || "Available"} className="w-full p-3 border rounded focus:outline-none focus:border-[#d4af37] bg-white">
+                                <option value="Available">Available</option>
+                                <option value="Unavailable">Unavailable</option>
+                                <option value="Sold Out. We can recreate it.">Sold Out (Remake)</option>
+                            </select>
+                        </div>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -152,9 +163,21 @@ export default function AdminDashboard({ initialProducts }: { initialProducts: P
 
             {/* Product List */}
             <section className="bg-white p-8 rounded-lg shadow-md border border-[#eaeaea]">
-                <h2 className="text-2xl font-serif mb-6 flex items-center gap-3">
-                    <Settings className="text-[#d4af37]" /> Product List
-                </h2>
+                <div className="flex justify-between items-center mb-6">
+                    <h2 className="text-2xl font-serif flex items-center gap-3">
+                        <Settings className="text-[#d4af37]" /> Product List
+                    </h2>
+                    <select
+                        value={statusFilter}
+                        onChange={(e) => setStatusFilter(e.target.value)}
+                        className="p-2 text-sm border-gray-300 rounded focus:border-[#d4af37] focus:ring-[#d4af37] bg-white border"
+                    >
+                        <option value="All">All Statuses</option>
+                        <option value="Available">Available</option>
+                        <option value="Unavailable">Unavailable</option>
+                        <option value="Sold Out. We can recreate it.">Sold Out (Remake)</option>
+                    </select>
+                </div>
 
                 <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse min-w-[600px]">
@@ -163,16 +186,17 @@ export default function AdminDashboard({ initialProducts }: { initialProducts: P
                                 <th className="py-3">Image</th>
                                 <th className="py-3">Name</th>
                                 <th className="py-3">Price</th>
+                                <th className="py-3 w-40">Status</th>
                                 <th className="py-3 text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {products.length === 0 ? (
+                            {filteredProducts.length === 0 ? (
                                 <tr>
-                                    <td colSpan={4} className="text-center py-8 text-gray-400">No products found.</td>
+                                    <td colSpan={5} className="text-center py-8 text-gray-400">No products found.</td>
                                 </tr>
                             ) : (
-                                products.map((p) => (
+                                filteredProducts.map((p) => (
                                     <tr key={p.id} className="border-b hover:bg-gray-50 transition-colors">
                                         <td className="py-3">
                                             <div className="w-12 h-12 relative border rounded bg-gray-50">
@@ -181,6 +205,7 @@ export default function AdminDashboard({ initialProducts }: { initialProducts: P
                                         </td>
                                         <td className="py-3 font-medium">{p.name}</td>
                                         <td className="py-3">₹{p.price}</td>
+                                        <td className="py-3 text-sm text-gray-600">{p.status || "Available"}</td>
                                         <td className="py-3 text-right space-x-4">
                                             <button onClick={() => { setEditingProduct(p); setPreviewImage(null); window.scrollTo({ top: 0, behavior: "smooth" }); }} className="text-blue-500 hover:text-blue-700">
                                                 <Edit size={18} />

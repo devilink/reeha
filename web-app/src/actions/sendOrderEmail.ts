@@ -12,6 +12,8 @@ interface OrderEmailParams {
     total: number;
     customerEmail?: string;
     customerName?: string;
+    address?: string;
+    phone?: string;
 }
 
 export async function sendOrderEmail(orderDetails: OrderEmailParams) {
@@ -45,18 +47,23 @@ export async function sendOrderEmail(orderDetails: OrderEmailParams) {
 
         const mailOptions = {
             from: `"Label Reeha Orders" <${EMAIL_USER}>`,
-            to: "princedass000555@gmail.com", // Admin email
+            to: EMAIL_USER, // Admin email
             subject: `New Order Received! Payment ID: ${orderDetails.paymentId}`,
             html: `
                 <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto;">
                     <h2 style="color: #d4af37;">New Order Notification</h2>
-                    <p>A new order has been successfully placed.</p>
+                    <p>A new order has been successfully placed via Razorpay.</p>
+                    <p><strong>Payment ID:</strong> ${orderDetails.paymentId}</p>
                     
-                    <div style="background-color: #f9f7f2; padding: 15px; border-radius: 5px; margin: 20px 0;">
-                        <h3 style="margin-top: 0; color: #1a1a1a;">Order Details</h3>
-                        <p><strong>Payment ID:</strong> ${orderDetails.paymentId}</p>
-                        ${orderDetails.customerName ? `<p><strong>Customer Name:</strong> ${orderDetails.customerName}</p>` : ""}
-                        ${orderDetails.customerEmail ? `<p><strong>Customer Email:</strong> ${orderDetails.customerEmail}</p>` : ""}
+                    <div style="background-color: #f9f7f2; padding: 20px; border-radius: 8px; border: 1px solid #d4af37; margin: 20px 0;">
+                        <h3 style="margin-top: 0; color: #1a1a1a; border-bottom: 2px solid #d4af37; padding-bottom: 5px;">Customer & Shipping Details</h3>
+                        <p><strong>Name:</strong> ${orderDetails.customerName || 'N/A'}</p>
+                        <p><strong>Email:</strong> ${orderDetails.customerEmail || 'N/A'}</p>
+                        <p><strong>Phone:</strong> ${orderDetails.phone || 'N/A'}</p>
+                        <div style="margin-top: 15px; padding: 10px; background: white; border-left: 4px solid #d4af37;">
+                            <strong>Shipping Address:</strong><br/>
+                            ${orderDetails.address ? orderDetails.address.split(',').join(',<br/>') : 'N/A'}
+                        </div>
                     </div>
 
                     <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">

@@ -9,4 +9,5 @@ export interface Product {
     stock?: number;
     instaUrl?: string;
     fbUrl?: string;
+    status?: string;
 }

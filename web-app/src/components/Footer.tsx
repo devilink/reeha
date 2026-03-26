@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Footer() {
     return (
         <footer className="bg-brand-dark text-brand-cream/60 py-12 px-6 border-t border-brand-gold/20">
@@ -13,7 +15,10 @@ export default function Footer() {
                     <a href="https://wa.me/919773577782" className="hover:text-brand-gold transition-colors"><i className="fab fa-whatsapp"></i></a>
                 </div>
 
-                <div className="text-center md:text-right text-xs">
+                <div className="text-center md:text-right text-xs flex flex-col items-center md:items-end gap-2">
+                    <div className="flex gap-4">
+                        <Link href="/terms-and-conditions" className="hover:text-brand-gold transition-colors">Terms &amp; Conditions</Link>
+                    </div>
                     <p suppressHydrationWarning>&copy; {new Date().getFullYear()} Label Reeha. All rights reserved.</p>
                 </div>
             </div>
