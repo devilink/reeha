@@ -157,10 +157,16 @@ export default function Home() {
               whileInView={{ x: 0, opacity: 1 }}
               transition={{ duration: 1, ease: "easeOut" }}
               viewport={{ once: true, margin: "-100px" }}
-              className="md:w-1/3 order-1 md:order-2"
+              className="w-full md:w-1/3 order-1 md:order-2"
             >
-              <div className="relative w-full h-[400px] md:w-[350px] border-4 border-[#d4af37] shadow-2xl bg-[#1a1a1a] mx-auto overflow-hidden">
-                <img src="/Assets/founder.jpeg" alt="Founder" className="w-full h-full object-cover object-top p-2" />
+              <div className="relative w-full max-w-[350px] aspect-[3/4] md:h-[450px] border-4 border-[#d4af37] shadow-2xl bg-[#1a1a1a] mx-auto overflow-hidden">
+                <Image 
+                  src="/Assets/founder.jpeg" 
+                  alt="Founder" 
+                  fill
+                  className="object-cover object-top p-2"
+                  sizes="(max-width: 768px) 100vw, 350px"
+                />
               </div>
             </motion.div>
 
