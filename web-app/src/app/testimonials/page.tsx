@@ -1,6 +1,38 @@
+"use client";
+
 import Image from "next/image";
+import { useEffect, useState } from "react";
+
+interface Testimonial {
+    id: string;
+    name: string;
+    designation: string;
+    quote: string;
+    imageUrl: string;
+}
+
+import { getTestimonials } from "@/actions/getTestimonials";
 
 export default function TestimonialsPage() {
+    const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        async function fetchTestimonials() {
+            try {
+                const data = await getTestimonials();
+                setTestimonials(data);
+            } catch (err: any) {
+                console.error(err);
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        }
+        fetchTestimonials();
+    }, []);
+
     return (
         <>
             {/* Hero Section */}
@@ -18,99 +50,69 @@ export default function TestimonialsPage() {
             {/* Written Testimonials Section */}
             <section className="py-16 px-6 bg-[#f5f0eb]">
                 <div className="max-w-7xl mx-auto">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {/* Testimonial 1 */}
-                        <div className="bg-white rounded-xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300 overflow-hidden group">
-                            <div className="h-64 overflow-hidden relative">
-                                <Image
-                                    src="/Assets/testi1.jpeg"
-                                    alt="Ananya S."
-                                    fill
-                                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                                />
-                            </div>
-                            <div className="p-8">
-                                <div className="text-[#d4af37] text-4xl font-serif mb-4">“</div>
-                                <p className="text-gray-600 italic mb-6 leading-relaxed">
-                                    Purely handcrafted and extremely lightweight, the unique design
-                                    ensures an all day comfort. The set arrives in a signature Label
-                                    Reeha jewellery box, accompanied by a handwritten note and a
-                                    little information about the artist’s inspiration.
-                                </p>
-                                <div>
-                                    <h4 className="font-bold text-gray-800 text-sm uppercase tracking-wide">
-                                        Dr Ankumoni Saikia
-                                    </h4>
-                                    <span className="text-xs text-gray-500">
-                                        Principal- Dhubri Medical College
-                                    </span>
-                                </div>
-                            </div>
+                    {loading ? (
+                        <div className="text-center py-12">
+                            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#d4af37] mx-auto mb-4"></div>
+                            <p className="text-gray-500 font-serif">Loading Testimonials...</p>
                         </div>
-
-                        {/* Testimonial 2 */}
-                        <div className="bg-white rounded-xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300 overflow-hidden group">
-                            <div className="h-64 overflow-hidden relative">
-                                <Image
-                                    src="/Assets/testi2.jpeg"
-                                    alt="Priya M."
-                                    fill
-                                    className="object-cover object-[20%_20%] transition-transform duration-700 group-hover:scale-105"
-                                />
-                            </div>
-                            <div className="p-8">
-                                <div className="text-[#d4af37] text-4xl font-serif mb-4">“</div>
-                                <p className="text-gray-600 italic mb-6 leading-relaxed">
-                                    I absolutely love this jewellery! It’s durable, bold and
-                                    surprisingly affordable for the quality you get. I’ve worn it
-                                    multiple times and it still looks as good as new. What I really
-                                    appreciate is how versatile it is – it pairs perfectly with both
-                                    western outfits and traditional Indian attire, making it a great
-                                    choice for everyday wear as well as special occasions. Thanks
-                                    Bini!
-                                </p>
-                                <div>
-                                    <h4 className="font-bold text-gray-800 text-sm uppercase tracking-wide">
-                                        Jafrina Yesmin
-                                    </h4>
-                                    <span className="text-xs text-gray-500">UK</span>
-                                </div>
-                            </div>
+                    ) : error ? (
+                        <div className="text-center py-12 text-red-500">
+                            Failed to load testimonials. Please try again later.
                         </div>
-
-                        {/* Testimonial 3 */}
-                        <div className="bg-white rounded-xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300 overflow-hidden group">
-                            <div className="h-64 overflow-hidden relative">
-                                <Image
-                                    src="/Assets/testi3.jpeg"
-                                    alt="Sneha R."
-                                    fill
-                                    className="object-cover object-[20%_20%] transition-transform duration-700 group-hover:scale-105"
-                                />
-                            </div>
-                            <div className="p-8">
-                                <div className="text-[#d4af37] text-4xl font-serif mb-4">“</div>
-                                <p className="text-gray-600 italic mb-6 leading-relaxed">
-                                    I had the pleasure of wearing stunning earrings and necklaces
-                                    crafted from the stencils of paat, muga and eri silks, a
-                                    cherished Assamese textile tradition from Label Reeha , during a
-                                    recent event of mine. The pieces beautifully blend the intricate
-                                    weaves of Assamese handloom with elegant jewelry design,
-                                    offering a unique fusion of cultural heritage and modern
-                                    sophistication perfect for both everyday wear and special
-                                    occasions.
-                                </p>
-                                <div>
-                                    <h4 className="font-bold text-gray-800 text-sm uppercase tracking-wide">
-                                        Seema Sharma -Partner
-                                    </h4>
-                                    <span className="text-xs text-gray-500">
-                                        Versatilis Legal LLP, Delhi
-                                    </span>
-                                </div>
-                            </div>
+                    ) : testimonials.length === 0 ? (
+                        <div className="text-center py-12 text-gray-500">
+                            No testimonials available at the moment.
                         </div>
-                    </div>
+                    ) : (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            {testimonials.map((testi) => {
+                                const isVideo = testi.imageUrl?.match(/\.(mp4|webm|mov)$/i);
+                                return (
+                                <div key={testi.id} className="bg-white rounded-xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300 overflow-hidden group">
+                                    <div className={`${(testi.quote || testi.name) ? "h-64" : "h-[400px]"} overflow-hidden relative bg-black`}>
+                                        {isVideo ? (
+                                            <video
+                                                src={testi.imageUrl}
+                                                className="w-full h-full object-contain"
+                                                autoPlay
+                                                muted
+                                                loop
+                                                playsInline
+                                            />
+                                        ) : (
+                                            <Image
+                                                src={testi.imageUrl}
+                                                alt={testi.name}
+                                                fill
+                                                className="object-cover transition-transform duration-700 group-hover:scale-105"
+                                            />
+                                        )}
+                                    </div>
+                                    {(testi.quote || testi.name) && (
+                                        <div className="p-8">
+                                            {testi.quote && <div className="text-[#d4af37] text-4xl font-serif mb-4">“</div>}
+                                            {testi.quote && (
+                                                <p className="text-gray-600 italic mb-6 leading-relaxed">
+                                                    {testi.quote}
+                                                </p>
+                                            )}
+                                            {testi.name && (
+                                                <div>
+                                                    <h4 className="font-bold text-gray-800 text-sm uppercase tracking-wide">
+                                                        {testi.name}
+                                                    </h4>
+                                                    <span className="text-xs text-gray-500">
+                                                        {testi.designation}
+                                                    </span>
+                                                </div>
+                                            )}
+                                        </div>
+                                    )}
+                                </div>
+                                );
+                            })}
+                        </div>
+                    )}
                 </div>
             </section>
 

@@ -22,9 +22,15 @@ export default async function AdminProductsPage() {
                     </Link>
                 </div>
 
-                <Link href="/admin" className="inline-flex items-center text-gray-500 mb-6 hover:text-brand-dark">
-                    <ArrowLeft size={16} className="mr-2" /> Back to Dashboard
-                </Link>
+                <div className="flex items-center space-x-6 mb-6">
+                    <Link href="/admin" className="inline-flex items-center text-gray-500 hover:text-brand-dark transition-colors">
+                        <ArrowLeft size={16} className="mr-2" /> Dashboard
+                    </Link>
+                    <div className="h-4 w-px bg-gray-300"></div>
+                    <Link href="/admin/testimonials" className="inline-flex items-center text-brand-gold hover:text-brand-dark font-medium transition-colors">
+                        Manage Testimonials →
+                    </Link>
+                </div>
 
                 <AdminProductsClient initialProducts={products} />
             </div>

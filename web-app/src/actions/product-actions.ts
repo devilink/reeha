@@ -1,7 +1,6 @@
 "use server";
 
-import { db, TABLE_NAME } from "@/lib/db";
-import { PutCommand, UpdateCommand } from "@aws-sdk/lib-dynamodb";
+import { supabase } from "@/lib/db";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { randomUUID } from "crypto";
@@ -34,12 +33,8 @@ export async function createProduct(formData: FormData) {
         createdAt: new Date().toISOString(),
     };
 
-    await db.send(
-        new PutCommand({
-            TableName: TABLE_NAME,
-            Item: product,
-        })
-    );
+    const { error } = await supabase.from('products').insert(product);
+    if (error) throw error;
 
     revalidatePath("/shop");
     revalidatePath("/admin/products");
@@ -50,15 +45,12 @@ export async function updateProductStatus(id: string, newStatus: string) {
     await checkAdmin();
     if (!id || !newStatus) throw new Error("Missing parameters");
 
-    await db.send(
-        new UpdateCommand({
-            TableName: TABLE_NAME,
-            Key: { id },
-            UpdateExpression: "set #s = :s",
-            ExpressionAttributeNames: { "#s": "status" },
-            ExpressionAttributeValues: { ":s": newStatus }
-        })
-    );
+    const { error } = await supabase
+        .from('products')
+        .update({ status: newStatus })
+        .eq('id', id);
+        
+    if (error) throw error;
 
     revalidatePath("/shop");
     revalidatePath("/admin/products");

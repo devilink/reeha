@@ -425,78 +425,12 @@
     <!-- Written Testimonials Section -->
     <section class="py-16 px-6 bg-[#f5f0eb]">
         <div class="max-w-7xl mx-auto">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Testimonial 1 -->
-                <div
-                    class="bg-white rounded-xl shadow-lg reveal-up border border-gray-100 hover:shadow-xl transition-shadow duration-300 overflow-hidden group">
-                    <div class="h-64 overflow-hidden">
-                        <img src="Assets/testi1.jpeg" alt="Ananya S."
-                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
-                    </div>
-                    <div class="p-8">
-                        <div class="text-[#d4af37] text-4xl font-serif mb-4">“</div>
-                        <p class="text-gray-600 italic mb-6 leading-relaxed">
-                            Purely handcrafted and extremely lightweight, the unique design ensures an all day comfort.
-                            The set arrives in a signature Label Reeha jewellery box, accompanied by a handwritten note
-                            and a little information about the artist’s inspiration.
-                        </p>
-                        <div>
-                            <h4 class="font-bold text-gray-800 text-sm uppercase tracking-wide">Dr Ankumoni Saikia</h4>
-                            <span class="text-xs text-gray-500">Principal- Dhubri Medical College</span>
-                        </div>
-                    </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="testimonials-grid">
+                <!-- Testimonial loading... -->
+                <div class="col-span-1 md:col-span-2 lg:col-span-3 text-center py-12">
+                    <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-gold mx-auto mb-4"></div>
+                    <p class="text-gray-500 font-serif">Loading Testimonials...</p>
                 </div>
-
-                <!-- Testimonial 2 -->
-                <div
-                    class="bg-white rounded-xl shadow-lg reveal-up border border-gray-100 hover:shadow-xl transition-shadow duration-300 overflow-hidden group">
-                    <div class="h-64 overflow-hidden">
-                        <img src="Assets/testi2.jpeg" alt="Priya M."
-                            class="w-full h-full object-cover object-[20%_20%] transition-transform duration-700 group-hover:scale-105">
-                    </div>
-                    <div class="p-8">
-                        <div class="text-[#d4af37] text-4xl font-serif mb-4">“</div>
-                        <p class="text-gray-600 italic mb-6 leading-relaxed">
-                            I absolutely love this jewellery! It’s durable, bold and surprisingly affordable for the
-                            quality you get. I’ve worn it multiple times and it still looks as good as new. What I
-                            really appreciate
-                            is how versatile it is – it pairs perfectly with both western outfits and traditional Indian
-                            attire, making it a great choice for everyday wear as well as special occasions. Thanks
-                            Bini!
-                        </p>
-                        <div>
-                            <h4 class="font-bold text-gray-800 text-sm uppercase tracking-wide">Jafrina Yesmin</h4>
-                            <span class="text-xs text-gray-500">UK</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Testimonial 3 -->
-                <div
-                    class="bg-white rounded-xl shadow-lg reveal-up border border-gray-100 hover:shadow-xl transition-shadow duration-300 overflow-hidden group">
-                    <div class="h-64 overflow-hidden">
-                        <img src="Assets/testi3.jpeg" alt="Sneha R."
-                            class="w-full h-full object-cover object-[20%_20%] transition-transform duration-700 group-hover:scale-105">
-                    </div>
-                    <div class="p-8">
-                        <div class="text-[#d4af37] text-4xl font-serif mb-4">“</div>
-                        <p class="text-gray-600 italic mb-6 leading-relaxed">
-                            I had the pleasure of wearing stunning earrings and
-                            necklaces crafted from the stencils of paat, muga and eri silks, a cherished
-                            Assamese textile tradition from Label Reeha , during a recent event of mine.
-                            The pieces beautifully blend the intricate weaves of Assamese handloom with elegant jewelry
-                            design, offering a unique fusion of cultural heritage and modern sophistication perfect for
-                            both everyday wear and special occasions. As someone who appreciates artisanal
-                            craftsmanship, these jewellery pieces were a great addition to my attire.
-                        </p>
-                        <div>
-                            <h4 class="font-bold text-gray-800 text-sm uppercase tracking-wide">Seema Sharma -Partner
-                            </h4>
-                            <span class="text-xs text-gray-500">Versatilis Legal LLP, Delhi</span>
-                        </div>
-                    </div>
-                </div>
-
             </div>
         </div>
     </section>
@@ -700,6 +634,61 @@
             hamburger.classList.remove("active");
             mobileMenu.classList.remove("active");
         }));
+
+        // Fetch Testimonials
+        async function fetchTestimonials() {
+            const grid = document.getElementById('testimonials-grid');
+            try {
+                const response = await fetch('/api/testimonials');
+                if (!response.ok) throw new Error('Network response was not ok');
+                const testimonials = await response.json();
+
+                if (testimonials.length === 0) {
+                    grid.innerHTML = '<div class="col-span-1 md:col-span-2 lg:col-span-3 text-center text-gray-500 py-12">No testimonials available at the moment.</div>';
+                    return;
+                }
+
+                grid.innerHTML = '';
+                testimonials.forEach(testi => {
+                    grid.innerHTML += `
+                        <div class="bg-white rounded-xl shadow-lg reveal-up border border-gray-100 hover:shadow-xl transition-shadow duration-300 overflow-hidden group">
+                            <div class="h-64 overflow-hidden">
+                                <img src="${testi.imageUrl}" alt="${testi.name}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                            </div>
+                            <div class="p-8">
+                                <div class="text-[#d4af37] text-4xl font-serif mb-4">“</div>
+                                <p class="text-gray-600 italic mb-6 leading-relaxed">${testi.quote}</p>
+                                <div>
+                                    <h4 class="font-bold text-gray-800 text-sm uppercase tracking-wide">${testi.name}</h4>
+                                    <span class="text-xs text-gray-500">${testi.designation}</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                // Apply GSAP Animations to new elements
+                gsap.utils.toArray('#testimonials-grid .reveal-up').forEach(elem => {
+                    gsap.from(elem, {
+                        scrollTrigger: {
+                            trigger: elem,
+                            start: "top 85%"
+                        },
+                        y: 50,
+                        opacity: 0,
+                        duration: 1,
+                        ease: "power2.out"
+                    });
+                });
+                
+            } catch (error) {
+                console.error("Failed to fetch testimonials:", error);
+                grid.innerHTML = '<div class="col-span-1 md:col-span-2 lg:col-span-3 text-center text-red-500 py-12">Failed to load testimonials. Please try again later.</div>';
+            }
+        }
+        
+        // Initial fetch
+        fetchTestimonials();
 
     </script>
 

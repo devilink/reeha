@@ -1,13 +1,6 @@
-import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import { DynamoDBDocumentClient } from "@aws-sdk/lib-dynamodb";
+import { createClient } from "@supabase/supabase-js";
 
-const client = new DynamoDBClient({
-    region: process.env.AWS_REGION || "eu-north-1",
-    credentials: {
-        accessKeyId: process.env.AWS_ACCESS_KEY_ID || "",
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || "",
-    },
-});
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
 
-export const db = DynamoDBDocumentClient.from(client);
-export const TABLE_NAME = process.env.AWS_TABLE_NAME || "Products";
+export const supabase = createClient(supabaseUrl, supabaseKey);

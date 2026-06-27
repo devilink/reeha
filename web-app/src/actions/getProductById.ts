@@ -1,16 +1,19 @@
-import { db, TABLE_NAME } from "@/lib/db";
-import { GetCommand } from "@aws-sdk/lib-dynamodb";
+import { supabase } from "@/lib/db";
 import { Product } from "@/types";
 
 export async function getProductById(id: string): Promise<Product | null> {
     try {
-        const command = new GetCommand({
-            TableName: TABLE_NAME,
-            Key: { id },
-        });
+        const { data: item, error } = await supabase
+            .from('products')
+            .select('*')
+            .eq('id', id)
+            .single();
 
-        const response = await db.send(command);
-        return (response.Item as Product) || null;
+        if (error) {
+            if (error.code === 'PGRST116') return null; // not found
+            throw error;
+        }
+        return (item as Product) || null;
     } catch (error) {
         console.error("Error fetching product:", error);
         return null;

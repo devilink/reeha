@@ -1,28 +1,15 @@
 "use server";
 
 import { currentUser } from "@clerk/nextjs/server";
-import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
-import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import { DynamoDBDocumentClient, PutCommand, DeleteCommand } from "@aws-sdk/lib-dynamodb";
+import { supabase } from "@/lib/db";
 import { revalidatePath } from "next/cache";
 import { checkAdmin } from "@/lib/auth";
+import { createClient } from "@supabase/supabase-js";
 
-function getAwsClients() {
-    const region = process.env.AWS_REGION || "eu-north-1";
-    const accessKeyId = process.env.AWS_ACCESS_KEY_ID || "";
-    const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY || "";
-    const tableName = process.env.AWS_TABLE_NAME || "Products";
-    const bucketName = process.env.AWS_BUCKET_NAME || "label-reeha-shop-images";
-
-    if (!accessKeyId || !secretAccessKey) {
-        throw new Error("Missing AWS Credentials! Please set them in .env.local");
-    }
-
-    const s3 = new S3Client({ region, credentials: { accessKeyId, secretAccessKey } });
-    const db = DynamoDBDocumentClient.from(new DynamoDBClient({ region, credentials: { accessKeyId, secretAccessKey } }));
-
-    return { s3, db, region, tableName, bucketName };
-}
+const supabaseAdmin = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL || "",
+    process.env.SUPABASE_SERVICE_ROLE_KEY || ""
+);
 
 export async function addProduct(formData: FormData) {
     await checkAdmin();
@@ -38,27 +25,27 @@ export async function addProduct(formData: FormData) {
         throw new Error("Missing required fields");
     }
 
-    const { s3, db, region, tableName, bucketName } = getAwsClients();
-
     const productId = `prod_${Date.now()}`;
     const fileExtension = file.name.split('.').pop();
     const fileName = `products/${productId}.${fileExtension}`;
 
-    // Upload to S3
-    const buffer = Buffer.from(await file.arrayBuffer());
-    await s3.send(new PutObjectCommand({
-        Bucket: bucketName,
-        Key: fileName,
-        Body: buffer,
-        ContentType: file.type,
-    }));
+    // Upload to Supabase Storage
+    const { error: uploadError } = await supabaseAdmin.storage
+        .from('label-reeha-images')
+        .upload(fileName, file, { upsert: true });
 
-    const imageUrl = `https://${bucketName}.s3.${region}.amazonaws.com/${fileName}`;
+    if (uploadError) throw uploadError;
 
-    // Save to DynamoDB
-    await db.send(new PutCommand({
-        TableName: tableName,
-        Item: {
+    const { data: publicUrlData } = supabaseAdmin.storage
+        .from('label-reeha-images')
+        .getPublicUrl(fileName);
+        
+    const imageUrl = publicUrlData.publicUrl;
+
+    // Save to Postgres
+    const { error: dbError } = await supabase
+        .from('products')
+        .insert({
             id: productId,
             name,
             price,
@@ -67,8 +54,9 @@ export async function addProduct(formData: FormData) {
             fbUrl,
             status,
             createdAt: new Date().toISOString()
-        }
-    }));
+        });
+
+    if (dbError) throw dbError;
 
     revalidatePath("/shop");
     revalidatePath("/admin");
@@ -91,27 +79,26 @@ export async function updateProduct(formData: FormData) {
         throw new Error("Missing required fields");
     }
 
-    const { s3, db, region, tableName, bucketName } = getAwsClients();
-
-    // Optional new image upload
     if (file && file.size > 0) {
         const fileExtension = file.name.split('.').pop();
         const fileName = `products/${id}_update_${Date.now()}.${fileExtension}`;
-        const buffer = Buffer.from(await file.arrayBuffer());
         
-        await s3.send(new PutObjectCommand({
-            Bucket: bucketName,
-            Key: fileName,
-            Body: buffer,
-            ContentType: file.type,
-        }));
-        imageUrl = `https://${bucketName}.s3.${region}.amazonaws.com/${fileName}`;
+        const { error: uploadError } = await supabaseAdmin.storage
+            .from('label-reeha-images')
+            .upload(fileName, file, { upsert: true });
+
+        if (uploadError) throw uploadError;
+
+        const { data: publicUrlData } = supabaseAdmin.storage
+            .from('label-reeha-images')
+            .getPublicUrl(fileName);
+            
+        imageUrl = publicUrlData.publicUrl;
     }
 
-    // Save to DynamoDB (Put replaces the whole item, which is fine here since we have all fields)
-    await db.send(new PutCommand({
-        TableName: tableName,
-        Item: {
+    const { error: dbError } = await supabase
+        .from('products')
+        .upsert({
             id,
             name,
             price,
@@ -120,8 +107,9 @@ export async function updateProduct(formData: FormData) {
             fbUrl,
             status,
             createdAt: formData.get("createdAt") as string || new Date().toISOString()
-        }
-    }));
+        });
+
+    if (dbError) throw dbError;
 
     revalidatePath("/shop");
     revalidatePath(`/product/${id}`);
@@ -133,12 +121,13 @@ export async function deleteProduct(formData: FormData) {
     await checkAdmin();
     
     const id = formData.get("id") as string;
-    const { db, tableName } = getAwsClients();
 
-    await db.send(new DeleteCommand({
-        TableName: tableName,
-        Key: { id }
-    }));
+    const { error } = await supabase
+        .from('products')
+        .delete()
+        .eq('id', id);
+
+    if (error) throw error;
 
     revalidatePath("/shop");
     revalidatePath("/admin");

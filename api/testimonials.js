@@ -13,19 +13,19 @@ module.exports = async function handler(req, res) {
     }
 
     try {
-        const { data: products, error } = await supabase
-            .from('products')
+        const { data: testimonials, error } = await supabase
+            .from('testimonials')
             .select('*')
-            .order('name', { ascending: false });
+            .order('createdAt', { ascending: false });
 
         if (error) {
             throw error;
         }
 
-        return res.status(200).json(products || []);
+        return res.status(200).json(testimonials || []);
 
     } catch (err) {
         console.error("Supabase Error:", err);
-        return res.status(500).json({ error: 'Failed to fetch products', details: err.message });
+        return res.status(500).json({ error: 'Failed to fetch testimonials', details: err.message });
     }
 }
