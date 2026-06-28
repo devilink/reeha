@@ -17,6 +17,7 @@ export async function addTestimonial(formData: FormData) {
     const name = formData.get("name") as string || "";
     const designation = formData.get("designation") as string || "";
     const quote = formData.get("quote") as string || "";
+    const type = formData.get("type") as string || "testimonial";
     const file = formData.get("media") as File;
 
     if (!file || file.size === 0) {
@@ -46,6 +47,7 @@ export async function addTestimonial(formData: FormData) {
         designation: designation || null,
         quote,
         imageUrl,
+        type,
         createdAt: new Date().toISOString(),
     };
 
@@ -64,6 +66,7 @@ export async function updateTestimonial(formData: FormData) {
     const name = formData.get("name") as string || "";
     const designation = formData.get("designation") as string || "";
     const quote = formData.get("quote") as string || "";
+    const type = formData.get("type") as string || "testimonial";
     let imageUrl = formData.get("currentImageUrl") as string;
     const file = formData.get("media") as File | null;
 
@@ -95,6 +98,7 @@ export async function updateTestimonial(formData: FormData) {
             designation: designation || null,
             quote,
             imageUrl,
+            type,
             createdAt: formData.get("createdAt") as string || new Date().toISOString()
         });
 

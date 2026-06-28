@@ -9,6 +9,7 @@ interface Testimonial {
     designation: string;
     quote: string;
     imageUrl: string;
+    type?: string;
 }
 
 import { getTestimonials } from "@/actions/getTestimonials";
@@ -32,6 +33,9 @@ export default function TestimonialsPage() {
         }
         fetchTestimonials();
     }, []);
+
+    const writtenTestimonials = testimonials.filter(t => (t.type || 'testimonial') === 'testimonial');
+    const socialProofs = testimonials.filter(t => t.type === 'social_proof');
 
     return (
         <>
@@ -59,25 +63,22 @@ export default function TestimonialsPage() {
                         <div className="text-center py-12 text-red-500">
                             Failed to load testimonials. Please try again later.
                         </div>
-                    ) : testimonials.length === 0 ? (
+                    ) : writtenTestimonials.length === 0 ? (
                         <div className="text-center py-12 text-gray-500">
                             No testimonials available at the moment.
                         </div>
                     ) : (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                            {testimonials.map((testi) => {
+                            {writtenTestimonials.map((testi) => {
                                 const isVideo = testi.imageUrl?.match(/\.(mp4|webm|mov)$/i);
                                 return (
                                 <div key={testi.id} className="bg-white rounded-xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300 overflow-hidden group">
-                                    <div className={`${(testi.quote || testi.name) ? "h-64" : "h-[400px]"} overflow-hidden relative bg-black`}>
+                                    <div className={`${isVideo ? "" : ((testi.quote || testi.name) ? "h-64" : "h-[400px]")} overflow-hidden relative bg-black flex items-center justify-center`}>
                                         {isVideo ? (
                                             <video
                                                 src={testi.imageUrl}
-                                                className="w-full h-full object-contain"
-                                                autoPlay
-                                                muted
-                                                loop
-                                                playsInline
+                                                className="w-full h-auto max-h-[700px] object-cover"
+                                                controls
                                             />
                                         ) : (
                                             <Image
@@ -122,50 +123,43 @@ export default function TestimonialsPage() {
                     <h2 className="text-3xl font-serif text-center mb-12 text-[#5d4a36]">
                         Social Media Proofs
                     </h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <div
-                            className="group relative aspect-[9/16] overflow-hidden rounded-xl shadow-lg"
-                            style={{
-                                background:
-                                    "linear-gradient(135deg, #b8860b, #d4af37, #f3e5ab, #d4af37, #b8860b)",
-                            }}
-                        >
-                            <Image
-                                src="/Assets/proof1.jpeg"
-                                alt="Customer Social Proof 1"
-                                fill
-                                className="object-contain transition-transform duration-700 group-hover:scale-110"
-                            />
+                    {loading ? (
+                        <div className="text-center py-12 text-gray-500 font-serif">Loading...</div>
+                    ) : socialProofs.length === 0 ? (
+                        <div className="text-center py-12 text-gray-500">
+                            No social media proofs available at the moment.
                         </div>
-                        <div
-                            className="group relative aspect-[9/16] overflow-hidden rounded-xl shadow-lg"
-                            style={{
-                                background:
-                                    "linear-gradient(135deg, #b8860b, #d4af37, #f3e5ab, #d4af37, #b8860b)",
-                            }}
-                        >
-                            <Image
-                                src="/Assets/proof2.jpeg"
-                                alt="Customer Social Proof 2"
-                                fill
-                                className="object-contain transition-transform duration-700 group-hover:scale-110"
-                            />
+                    ) : (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {socialProofs.map(proof => (
+                                <div
+                                    key={proof.id}
+                                    className="group relative aspect-[9/16] overflow-hidden rounded-xl shadow-lg bg-black"
+                                    style={{
+                                        background: "linear-gradient(135deg, #b8860b, #d4af37, #f3e5ab, #d4af37, #b8860b)",
+                                    }}
+                                >
+                                    {proof.imageUrl?.match(/\.(mp4|webm|mov)$/i) ? (
+                                        <video
+                                            src={proof.imageUrl}
+                                            className="w-full h-full object-contain"
+                                            autoPlay
+                                            muted
+                                            loop
+                                            playsInline
+                                        />
+                                    ) : (
+                                        <Image
+                                            src={proof.imageUrl}
+                                            alt={proof.name || "Customer Social Proof"}
+                                            fill
+                                            className="object-contain transition-transform duration-700 group-hover:scale-110"
+                                        />
+                                    )}
+                                </div>
+                            ))}
                         </div>
-                        <div
-                            className="group relative aspect-[9/16] overflow-hidden rounded-xl shadow-lg"
-                            style={{
-                                background:
-                                    "linear-gradient(135deg, #b8860b, #d4af37, #f3e5ab, #d4af37, #b8860b)",
-                            }}
-                        >
-                            <Image
-                                src="/Assets/proof3.jpeg"
-                                alt="Customer Social Proof 3"
-                                fill
-                                className="object-contain transition-transform duration-700 group-hover:scale-110"
-                            />
-                        </div>
-                    </div>
+                    )}
                 </div>
             </section>
 

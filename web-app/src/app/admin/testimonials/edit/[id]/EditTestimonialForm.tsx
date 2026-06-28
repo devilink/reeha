@@ -11,6 +11,7 @@ export default function EditTestimonialForm({ testimonial }: { testimonial: any 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [selectedFileName, setSelectedFileName] = useState<string | null>(null);
+    const [type, setType] = useState(testimonial.type || "testimonial");
     const router = useRouter();
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -89,6 +90,21 @@ export default function EditTestimonialForm({ testimonial }: { testimonial: any 
 
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-2">
+                                Type
+                            </label>
+                            <select
+                                name="type"
+                                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-brand-gold focus:border-brand-gold outline-none transition-colors bg-white"
+                                value={type}
+                                onChange={(e) => setType(e.target.value)}
+                            >
+                                <option value="testimonial">Testimonial</option>
+                                <option value="social_proof">Social Media Proof</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">
                                 Quote
                             </label>
                             <textarea
@@ -124,7 +140,7 @@ export default function EditTestimonialForm({ testimonial }: { testimonial: any 
                                             className="relative cursor-pointer bg-white rounded-md font-medium text-brand-gold hover:text-brand-dark focus-within:outline-none"
                                         >
                                             <span>{selectedFileName ? "Change file" : "Upload new file"}</span>
-                                            <input id="media" name="media" type="file" accept="image/*,video/mp4,video/webm,video/quicktime" className="sr-only" onChange={handleFileChange} />
+                                            <input id="media" name="media" type="file" accept={type === "testimonial" ? "image/*,video/mp4,video/webm,video/quicktime" : "image/*"} className="sr-only" onChange={handleFileChange} />
                                         </label>
                                         {!selectedFileName && <p className="pl-1">or drag and drop</p>}
                                     </div>
@@ -134,7 +150,7 @@ export default function EditTestimonialForm({ testimonial }: { testimonial: any 
                                         </p>
                                     ) : (
                                         <p className="text-xs text-gray-500 mt-2">
-                                            PNG, JPG, MP4 up to 50MB
+                                            {type === "testimonial" ? "PNG, JPG, MP4 up to 50MB" : "PNG, JPG up to 50MB"}
                                         </p>
                                     )}
                                 </div>

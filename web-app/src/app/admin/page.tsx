@@ -22,6 +22,9 @@ export default async function AdminPage() {
                     <h1 className="text-2xl font-serif font-bold text-[#d4af37]">
                         Label Reeha <span className="text-sm font-sans text-[#1a1a1a] uppercase tracking-widest ml-2">Admin</span>
                     </h1>
+                    <a href="/admin/testimonials" className="px-6 py-2 bg-[#d4af37] text-white rounded font-semibold hover:bg-black transition-colors text-sm uppercase">
+                        Manage Testimonials
+                    </a>
                 </div>
             </header>
             
