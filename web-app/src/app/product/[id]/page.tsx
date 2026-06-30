@@ -42,8 +42,8 @@ export default async function ProductPage({ params }: PageProps) {
                 {/* Info Section */}
                 <div className="flex flex-col justify-center">
                     <h1 className="text-4xl md:text-5xl font-serif text-brand-dark mb-4">{product.name}</h1>
-                    {product.status && (
-                        <p className={`text-sm font-bold uppercase tracking-wide mb-2 ${product.status === 'Unavailable' ? 'text-red-500' : product.status === 'Available' ? 'text-green-600' : 'text-[#d4af37]'}`}>
+                    {product.status && product.status !== 'Available' && (
+                        <p className={`text-sm font-bold uppercase tracking-wide mb-2 ${product.status === 'Unavailable' ? 'text-red-500' : 'text-[#d4af37]'}`}>
                             {product.status}
                         </p>
                     )}

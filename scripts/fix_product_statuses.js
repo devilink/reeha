@@ -33,8 +33,14 @@ async function main() {
         const statusStr = parts[2].toUpperCase();
 
         let newStatus = 'Available';
-        if (statusStr.includes('SOLD')) {
-            newStatus = 'Sold Out';
+        if (statusStr === 'SOLD') {
+            newStatus = 'Unavailable';
+        } else if (statusStr.includes('SOLD') && statusStr.includes('REMAKE')) {
+            newStatus = 'Sold Out. We can recreate it.';
+        } else if (statusStr === 'AVAILABLE') {
+            newStatus = 'Available';
+        } else {
+            if (statusStr.includes('SOLD')) newStatus = 'Unavailable';
         }
 
         const { data: products, error } = await supabase
