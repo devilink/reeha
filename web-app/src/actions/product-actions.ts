@@ -1,6 +1,6 @@
 "use server";
 
-import { supabase } from "@/lib/db";
+import { supabaseAdmin } from "@/lib/db";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { randomUUID } from "crypto";
@@ -33,7 +33,7 @@ export async function createProduct(formData: FormData) {
         createdAt: new Date().toISOString(),
     };
 
-    const { error } = await supabase.from('products').insert(product);
+    const { error } = await supabaseAdmin.from('products').insert(product);
     if (error) throw error;
 
     revalidatePath("/shop");
@@ -45,7 +45,7 @@ export async function updateProductStatus(id: string, newStatus: string) {
     await checkAdmin();
     if (!id || !newStatus) throw new Error("Missing parameters");
 
-    const { error } = await supabase
+    const { error } = await supabaseAdmin
         .from('products')
         .update({ status: newStatus })
         .eq('id', id);

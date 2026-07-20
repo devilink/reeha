@@ -1,10 +1,10 @@
 "use server";
 
-import { supabase } from "@/lib/db";
+import { supabaseAdmin } from "@/lib/db";
 
 export async function getTestimonials() {
     try {
-        const { data: items, error } = await supabase
+        const { data: items, error } = await supabaseAdmin
             .from('testimonials')
             .select('*')
             .order('createdAt', { ascending: false });

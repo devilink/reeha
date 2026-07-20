@@ -1,9 +1,9 @@
-import { supabase } from "@/lib/db";
+import { supabaseAdmin } from "@/lib/db";
 import { Product } from "@/types";
 
 export async function getProducts(): Promise<Product[]> {
     try {
-        const { data: items, error } = await supabase
+        const { data: items, error } = await supabaseAdmin
             .from('products')
             .select('*');
 

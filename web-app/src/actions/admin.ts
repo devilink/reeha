@@ -43,7 +43,7 @@ export async function addProduct(formData: FormData) {
     const imageUrl = publicUrlData.publicUrl;
 
     // Save to Postgres
-    const { error: dbError } = await supabase
+    const { error: dbError } = await supabaseAdmin
         .from('products')
         .insert({
             id: productId,
@@ -96,7 +96,7 @@ export async function updateProduct(formData: FormData) {
         imageUrl = publicUrlData.publicUrl;
     }
 
-    const { error: dbError } = await supabase
+    const { error: dbError } = await supabaseAdmin
         .from('products')
         .upsert({
             id,
@@ -122,7 +122,7 @@ export async function deleteProduct(formData: FormData) {
     
     const id = formData.get("id") as string;
 
-    const { error } = await supabase
+    const { error } = await supabaseAdmin
         .from('products')
         .delete()
         .eq('id', id);
